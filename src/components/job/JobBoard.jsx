@@ -73,7 +73,7 @@ const JobBoard = ({ jobs }) => {
                         <Content
                             style={{
                                 width: "100%",
-                                height: "100vh",
+
                                 paddingBottom: "20px",
                                 border: "1px solid #bfbfbf",
                                 overflow: "hidden",

@@ -12,6 +12,19 @@ export function viewCvApplication(id) {
     return apiPrivate.post(`applications/view/${id}`);
 }
 
+export function rejectApplication(id) {
+    return apiPrivate.post(`applications/reject/${id}`);
+}
+
+export function getApplicationsByFilter(jobId,status) {
+    return apiPrivate.get(`applications/getApplicationsByFilter?jobId=${jobId}&status=${status}`);
+}
+
+
+export function approveApplication(id) {
+    return apiPrivate.post(`applications/approve/${id}`);
+}
+
 
 
 

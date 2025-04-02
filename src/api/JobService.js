@@ -14,6 +14,10 @@ export const getFavoriteJob=()=>{
     return apiPrivate.get(`jobs/getFavoriteJobs}`);
 }
 
+export const getAllJobTitle=()=>{
+    return apiPrivate.get(`jobs/getAllJobTitle`);
+}
+
 
 
 export const approveJob=(id)=>{

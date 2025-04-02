@@ -17,11 +17,13 @@ const LoginPage = () => {
 
 
 
-    const onFinish = (values) => {
-         handleRequest(()=> login(values),(res)=>{
-            localStorage.setItem("token",res.data.token);
-            localStorage.setItem("user",JSON.stringify(res.data.user));
-            navigate(res.data.user.roles[0].name === "ADMIN" ? "/admin/home" : "/");
+    const onFinish =async (values) => {
+         await handleRequest(()=> login(values),(res)=>{
+             localStorage.clear();
+             localStorage.setItem("token",res.data.token);
+             localStorage.setItem("user",JSON.stringify(res.data.user));
+
+             navigate(res.data.user.roles[0].name === "ADMIN" ? "/admin/home" : "/");
 
         })
 

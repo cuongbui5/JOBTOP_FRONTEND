@@ -3,7 +3,7 @@ import {
     BankOutlined, BellOutlined, CreditCardOutlined,
     DashboardOutlined,
     FileTextOutlined, HeartOutlined, KeyOutlined, LogoutOutlined,
-    MessageOutlined, SolutionOutlined, TeamOutlined,
+    MessageOutlined, ScheduleOutlined, SolutionOutlined, TeamOutlined,
     UserOutlined
 } from "@ant-design/icons";
 import {Link, useLocation, useNavigate} from "react-router-dom";
@@ -83,6 +83,12 @@ const AppMenu=({isInline})=>{
 
         },
         {
+            key: "/recruiter/interview-schedule",
+            label: <Link to="/recruiter/interview-schedule">Đặt lịch phỏng vấn</Link>,
+            icon: <ScheduleOutlined />,
+
+        },
+        {
             key: "/recruiter/billing",
             label: <Link to="/recruiter/billing">Thanh toán & Gói dịch vụ</Link>,
             icon: <CreditCardOutlined />,
@@ -128,6 +134,12 @@ const AppMenu=({isInline})=>{
             key: "/applied-jobs",
             icon: <SolutionOutlined />,
             label: <Link to="/applied-jobs">Việc làm đã ứng tuyển</Link>,
+        },
+        {
+            key: "/interview-schedule/view",
+            label: <Link to="/interview-schedule/view">Xem lịch phỏng vấn</Link>,
+            icon: <ScheduleOutlined />,
+
         },
         {
             key: "/followed-companies",

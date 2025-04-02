@@ -25,6 +25,10 @@ import CompaniesPage from "../page/recruiter/CompaniesPage.jsx";
 import RecruiterApplicationPage from "../page/recruiter/RecruiterApplicationPage.jsx";
 import ResumePage from "../page/user/ResumePage.jsx";
 import UserProfileViewPage from "../page/user/UserProfileViewPage.jsx";
+import InterviewSchedulePage from "../page/recruiter/InterviewSchedulePage.jsx";
+import CreateInterviewSchedulePage from "../page/recruiter/CreateInterviewSchedulePage.jsx";
+import InterviewScheduleUserPage from "../page/user/InterviewScheduleUserPage.jsx";
+import UpdateInterviewSchedulePage from "../page/recruiter/UpdateInterviewSchedulePage.jsx";
 
 
 
@@ -56,6 +60,7 @@ const router = createBrowserRouter([
                     { path: "saved-jobs", element: <JobSavedPage /> },
                     { path: "followed-companies", element: <FollowedCompanyPage /> },
                     { path: "resumes", element: <ResumePage /> },
+                    { path: "/interview-schedule/view", element: <InterviewScheduleUserPage /> },
 
                 ],
 
@@ -67,6 +72,10 @@ const router = createBrowserRouter([
                     { path: "/recruiter/profile", element: <UpdateRecruiterProfilePage /> },
                     { path: "/recruiter/jobs", element: <RecruiterJobPage /> },
                     { path: "/recruiter/applications", element: <RecruiterApplicationPage /> },
+                    { path: "/recruiter/interview-schedule", element: <InterviewSchedulePage /> },
+                    { path: "/recruiter/interview-schedule/create", element: <CreateInterviewSchedulePage /> },
+                    { path: "/recruiter/interview-schedule/update/:id", element: <UpdateInterviewSchedulePage /> },
+
                     { path: "job/create", element: <JobForm /> },
                     { path: "job/edit/:id", element: <JobForm /> },
 

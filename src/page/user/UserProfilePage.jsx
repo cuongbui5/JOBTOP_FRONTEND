@@ -30,11 +30,11 @@ const UpdateUserProfile = () => {
         }
         const formattedData = {
             ...profile,
-            dateOfBirth: dayjs(profile.dateOfBirth)
+            dateOfBirth: profile.dateOfBirth ? dayjs(profile.dateOfBirth) : null
         };
 
         form.setFieldsValue(formattedData);
-        setImage(profile.image || "images/user_default.png");
+        setImage(profile.image || "/images/user_default.png");
 
     }
 
@@ -45,7 +45,7 @@ const UpdateUserProfile = () => {
                 initForm(res.data)
                 setProfile(res.data)
             }
-        })
+        },null,true)
     }
 
 
@@ -61,13 +61,14 @@ const UpdateUserProfile = () => {
 
     const handleFinish = async (values) => {
         if(values.dateOfBirth){
+            console.log("xo")
             values.dateOfBirth = dayjs(values.dateOfBirth).utcOffset(0, true).toISOString();
         }
         if(image){
             values.image=image;
         }
 
-        if(profile.id){
+        if(profile?.id){
             values.id=profile.id;
         }
 
@@ -80,7 +81,7 @@ const UpdateUserProfile = () => {
             }
 
 
-        })
+        },null,true)
 
 
 

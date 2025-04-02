@@ -1,26 +1,35 @@
 import {useEffect, useState} from "react";
 import useHandleApi from "../../hooks/UseHandleApi.js";
-import {Button, Flex, Form, Input, Modal, Select, Table} from "antd";
-import {BulbOutlined, CloseCircleOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
-import {getApplicationsByRecruiter, viewCvApplication} from "../../api/ApplicationService.js";
+import {Button, Flex, Modal, Select, Table} from "antd";
+import {
+    BulbOutlined,
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    ExclamationCircleOutlined,
+    EyeOutlined
+} from "@ant-design/icons";
+import {
+    approveApplication,
+    getApplicationsByRecruiter,
+    rejectApplication,
+    viewCvApplication
+} from "../../api/ApplicationService.js";
 import dayjs from "dayjs";
 import {Link} from "react-router-dom";
 
+const { confirm } = Modal;
 
 
 const { Option } = Select;
 
 const RecruiterApplicationPage=()=>{
     const [applications,setApplications]=useState(null);
-    const [applicationCurrent,setApplicationCurrent]=useState(null);
-    const [modalVisible, setModalVisible] = useState(false);
     const [pagination, setPagination] = useState({ current: 1, pageSize: 3, total: 0 });
     const [viewStatus, setViewStatus] = useState(null);
+    const {handleRequest}=useHandleApi();
 
 
 
-
-    const {handleRequest}=useHandleApi()
 
 
     async function handleViewCv(application) {
@@ -34,6 +43,44 @@ const RecruiterApplicationPage=()=>{
         })
     }
 
+    async function handleReject(record) {
+        if(record.status==="PENDING"||record.status==="VIEWED"){
+            await handleRequest(()=>rejectApplication(record?.id),(res)=>{
+                console.log(res)
+                fetchApplications(pagination.current, pagination.pageSize,viewStatus);
+            },null,true)
+        }
+
+    }
+
+
+    async function handleApprove(record) {
+        if(record.status==="PENDING"||record.status==="VIEWED"){
+            await handleRequest(()=>approveApplication(record?.id),(res)=>{
+                console.log(res)
+                fetchApplications(pagination.current, pagination.pageSize,viewStatus);
+            },null,true)
+        }
+
+    }
+
+    const showConfirm = (action, record) => {
+        confirm({
+            title: `Bạn có chắc chắn muốn ${action === "approve" ? "đồng ý" : "từ chối"} ứng viên này không?`,
+            icon: <ExclamationCircleOutlined />,
+            content: "Hành động này không thể hoàn tác!",
+            okText: "Xác nhận",
+            cancelText: "Hủy",
+            onOk: async ()=> {
+                if (action === "approve") {
+                     await handleApprove(record);
+                } else {
+                    await handleReject(record);
+                }
+            },
+        });
+    };
+
     const columnsResponsive = [
         {title: "Id", dataIndex: "id", key: "id"},
         {
@@ -45,6 +92,15 @@ const RecruiterApplicationPage=()=>{
                 <Link to={`/job-detail/${record.jobId}`}>{record.jobTitle}</Link>
             )
         },
+        {
+            title: "Tên ứng viên",
+            dataIndex: "fullName",
+            responsive: ["xs", "sm", "md", "lg"],
+            key: "fullName",
+            render: (fullName) => fullName ? fullName : "Ứng viên này chưa cập nhật profile",
+
+        },
+        {title: "Trạng thái", dataIndex: "status", key: "status"},
 
         {
             title: "Ngày ứng tuyển",
@@ -59,18 +115,15 @@ const RecruiterApplicationPage=()=>{
             key: "actions",
             render: (_, record) => (
                 <Flex gap="small" wrap="wrap">
+                    <Button type={"dashed"}   onClick={() => showConfirm("reject", record)}  icon={<CloseCircleOutlined/>}>Từ chối</Button>
+                    <Button type={"primary"}  onClick={() => showConfirm("approve", record)}  icon={< CheckCircleOutlined/>}>Đồng ý</Button>
                     <a href={record?.resume?.link} target="_blank" rel="noopener noreferrer">
                         <Button onClick={()=>handleViewCv(record)} icon={<EyeOutlined/>}>Xem CV</Button>
                     </a>
-                    <Link to={`/profile/user/${record.userId}`}>
-                        <Button icon={<EyeOutlined/>}>Xem thông tin ứng viên</Button>
-                    </Link>
-
-
                     <Button icon={<BulbOutlined/>}>AI nhận xét</Button>
-                    <Button icon={<CloseCircleOutlined/>}>Từ chối</Button>
-                    <Button icon={<EditOutlined/>} onClick={() => openDetailModal(record)}>Đặt lịch phỏng vấn</Button>
-
+                    <Link to={`/profile/user/${record.userId}`}>
+                        <Button type={"link"}>Xem thông tin ứng viên</Button>
+                    </Link>
 
                 </Flex>
             ),
@@ -93,17 +146,9 @@ const RecruiterApplicationPage=()=>{
             }
         );
     };
-    const openDetailModal = (record) => {
-        setApplicationCurrent(record);
 
-        setModalVisible(true);
-    };
 
-    // Khi đóng modal
-    const closeDetailModal = () => {
-        setApplicationCurrent(null);
-        setModalVisible(false);
-    };
+
 
     useEffect(() => {
         fetchApplications(pagination.current, pagination.pageSize,viewStatus);
@@ -128,13 +173,17 @@ const RecruiterApplicationPage=()=>{
         <div style={{maxWidth: "100%", height: "100%", margin: "auto", backgroundColor: "#fff"}}>
             <div style={{padding: 20}}>
                 <div style={{
-                    display:"flex",
-                    justifyContent:"space-between"
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom:20
+
                 }}>
+
                     <h1 style={{margin: "10px 0"}}>Danh sách ứng tuyển</h1>
-                    <Select  value={viewStatus} allowClear  placeholder="Chọn trạng thái" onChange={(value)=>{
+
+                    <Select value={viewStatus} allowClear placeholder="Chọn trạng thái" onChange={(value) => {
                         setViewStatus(value)
-                    }} style={{ width: 200, marginBottom: 16 }}>
+                    }} style={{width: 200, marginBottom: 16}}>
                         {viewStatusOptions.map((option) => (
                             <Option key={option.value} value={option.value}>
                                 {option.label}
@@ -143,33 +192,11 @@ const RecruiterApplicationPage=()=>{
                     </Select>
 
                 </div>
+                <h3>Chú ý: Nhà tuyển dụng không thể thay đổi trạng thái đơn ứng tuyển khi trạng thái hiện tại là APPROVED hoặc REJECTED </h3>
 
-                <Table onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={applications} pagination={pagination}   />
+                <Table onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={applications}
+                       pagination={pagination}/>
             </div>
-            <Modal
-                title="Đặt lịch phỏng vấn"
-                open={modalVisible}
-                onCancel={closeDetailModal}
-
-                footer={[
-                    <Button key="close" onClick={closeDetailModal}>Đóng</Button>
-                ]}
-            >
-                <Form layout="vertical">
-
-                    <Form.Item label="Địa chỉ phỏng vấn" name="officeAddress">
-                        <Input placeholder="Nhập địa chỉ văn phòng" />
-                    </Form.Item>
-                    <Form.Item label="Thời gian phỏng vấn" name="interviewTime">
-                        <Input placeholder="Nhập thời gian phỏng vấn" />
-                    </Form.Item>
-                    <Form.Item label="Ghi chú phỏng vấn" name="interviewNote">
-                        <Input placeholder="Nhập ghi chú phỏng vấn" />
-                    </Form.Item>
-                </Form>
-
-
-            </Modal>
 
 
         </div>
