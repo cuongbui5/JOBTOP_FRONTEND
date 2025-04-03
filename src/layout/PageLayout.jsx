@@ -2,7 +2,7 @@ import {Layout } from "antd";
 import HeaderCustom from "../components/web/Header.jsx";
 import CustomFooter from "../components/web/Footer.jsx";
 import {Outlet} from "react-router-dom";
-import ReportJobModal from "../components/job/ReportJobModal.jsx";
+import ReportModal from "../components/job/ReportModal.jsx";
 
 
 
@@ -19,7 +19,7 @@ const PageLayout=()=> {
             </Content>
             <CustomFooter/>
             <div>
-                <ReportJobModal/>
+                <ReportModal/>
 
             </div>
         </Layout>

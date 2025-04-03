@@ -4,23 +4,14 @@ import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import dayjs from "dayjs";
 import {createManySlots} from "../../api/InterviewSlotService.js";
+import {removeById} from "../../utils/helper.js";
 
 // eslint-disable-next-line react/prop-types
-const ChooseApplication=({jobId,scheduleId})=>{
-    const [applicants, setApplicants] = useState([]);
+const ChooseApplication=({approvedApplications,scheduleId,setApprovedApplications,fetchSlotsAgain})=>{
+
     const [selectedCandidates, setSelectedCandidates] = useState([]);
     const {handleRequest} = useApiRequest();
-    const fetchApproveApplication = async (id) => {
-        await handleRequest(() => getApplicationsByFilter(id, "APPROVED"), (res) => {
-            setApplicants(res.data);
-        });
-    };
-    useEffect(() => {
-        if(jobId){
-            fetchApproveApplication(jobId);
-        }
 
-    }, [jobId]);
 
 
 
@@ -95,7 +86,12 @@ const ChooseApplication=({jobId,scheduleId})=>{
         console.log(scheduleId)
         await handleRequest(()=>createManySlots({interviewScheduleId:scheduleId,applicationIds:selectedCandidates}),(res)=>{
             console.log(res)
-            fetchApproveApplication(jobId)
+            setSelectedCandidates([])
+
+            selectedCandidates.forEach((id)=>{
+                setApprovedApplications((pre)=>removeById(pre,id))
+            })
+            fetchSlotsAgain();
 
         })
 
@@ -104,7 +100,7 @@ const ChooseApplication=({jobId,scheduleId})=>{
     return (
         <div>
             <h2>Danh sách ứng viên đủ điều kiện</h2>
-            <Table dataSource={applicants} columns={columns} rowKey="id" pagination={false}/>
+            <Table dataSource={approvedApplications} columns={columns} rowKey="id" pagination={false}/>
             <Button style={{marginTop:10}} onClick={handleCreateManySlots}>Thêm người</Button>
         </div>
     )

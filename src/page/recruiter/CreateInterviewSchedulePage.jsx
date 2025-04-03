@@ -106,6 +106,7 @@ const CreateInterviewSchedulePage = () => {
 
     return (
         <div style={{padding: "40px"}}>
+            <h1 style={{marginBottom:20}}>Tạo lịch phỏng vấn</h1>
             <Row gutter={[40, 40]}>
                 {/* Cột Form bên trái */}
                 <Col xs={24} lg={12}>

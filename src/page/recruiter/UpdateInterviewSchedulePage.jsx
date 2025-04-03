@@ -44,33 +44,34 @@ const UpdateInterviewSchedulePage = () => {
     };
 
     return (
-        <div style={{ padding: "40px" }}>
+        <div style={{padding: "40px"}}>
+            <h1 style={{marginBottom:20}}>Cập nhật lịch phỏng vấn</h1>
             <Form form={form} layout="vertical">
                 <Form.Item label="Địa chỉ phỏng vấn" name="officeAddress">
-                    <Input placeholder="Nhập địa chỉ văn phòng" />
+                    <Input placeholder="Nhập địa chỉ văn phòng"/>
                 </Form.Item>
 
                 <Form.Item label="Ghi chú phỏng vấn" name="interviewNote">
-                    <Input placeholder="Nhập ghi chú phỏng vấn" />
+                    <Input placeholder="Nhập ghi chú phỏng vấn"/>
                 </Form.Item>
 
                 <Form.Item label="Ngày phỏng vấn" name="interviewDate"
-                           rules={[{ required: true, message: "Vui lòng chọn ngày!" }]}>
-                    <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
+                           rules={[{required: true, message: "Vui lòng chọn ngày!"}]}>
+                    <DatePicker format="YYYY-MM-DD" style={{width: "100%"}}/>
                 </Form.Item>
 
                 <Form.Item label="Giờ bắt đầu" name="startTime"
-                           rules={[{ required: true, message: "Vui lòng chọn giờ bắt đầu!" }]}>
-                    <TimePicker format="HH:mm" style={{ width: "100%" }} />
+                           rules={[{required: true, message: "Vui lòng chọn giờ bắt đầu!"}]}>
+                    <TimePicker format="HH:mm" style={{width: "100%"}}/>
                 </Form.Item>
 
                 <Form.Item label="Giờ kết thúc" name="endTime"
-                           rules={[{ required: true, message: "Vui lòng chọn giờ kết thúc!" }]}>
-                    <TimePicker format="HH:mm" style={{ width: "100%" }} />
+                           rules={[{required: true, message: "Vui lòng chọn giờ kết thúc!"}]}>
+                    <TimePicker format="HH:mm" style={{width: "100%"}}/>
                 </Form.Item>
 
                 <Form.Item label="Trạng thái" name="status"
-                           rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}>
+                           rules={[{required: true, message: "Vui lòng chọn trạng thái!"}]}>
                     <Select placeholder="Chọn trạng thái">
                         <Option value="SCHEDULED">Đã lên lịch</Option>
                         <Option value="COMPLETED">Hoàn thành</Option>
@@ -79,7 +80,7 @@ const UpdateInterviewSchedulePage = () => {
                 </Form.Item>
             </Form>
 
-            <Button size={"large"} style={{ marginTop: 20 }} type="primary" onClick={handleSubmit}>
+            <Button size={"large"} style={{marginTop: 20}} type="primary" onClick={handleSubmit}>
                 Cập nhật lịch phỏng vấn
             </Button>
         </div>

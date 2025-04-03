@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import {getRelatedJobs} from "../../api/PublicService.js";
 import LoadingWrapper from "../loading/LoadingWrapper.jsx";
-const PAGE_SIZE = 3;
+
 // eslint-disable-next-line react/prop-types
 const RelatedJobsList = ({jobId}) => {
     const {handleRequest}=useApiRequest();
@@ -74,7 +74,6 @@ const RelatedJobsList = ({jobId}) => {
                 {currentPage < totalPages && (
                     <div style={{ textAlign: "center", marginTop: 20 }}>
                         <Button
-                            type="primary"
                             size={"large"}
                             onClick={() => fetchRelatedJobs(currentPage + 1, true)}
 

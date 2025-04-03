@@ -3,17 +3,36 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import { getAllInterviewByUser } from "../../api/InterviewScheduleService.js";
-import {deleteSlotById, getAllSlotsByInterviewScheduleId} from "../../api/InterviewSlotService.js";
+import {
+    deleteSlotById,
+    getAllSlotsByInterviewScheduleId,
+    updateSlotStatusById
+} from "../../api/InterviewSlotService.js";
 import ChooseApplication from "./ChooseApplication.jsx";
 import {removeById} from "../../utils/helper.js";
+import {getApplicationsByFilter} from "../../api/ApplicationService.js";
 
 const InterviewSchedulePage = () => {
     const [interviewSchedules, setInterviewSchedules] = useState(null);
     const [applicants, setApplicants] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [jobId,setJobId]=useState(null);
-    const [scheduleId,setScheduleId]=useState(null);
+    const [schedule,setSchedule]=useState(null);
+    const [approvedApplications,setApprovedApplications]=useState(null);
     const { handleRequest } = useApiRequest();
+
+    const fetchApproveApplication = async (id) => {
+        await handleRequest(() => getApplicationsByFilter(id, "APPROVED"), (res) => {
+            setApprovedApplications(res.data);
+        });
+    };
+    useEffect(() => {
+        if(jobId){
+            fetchApproveApplication(jobId);
+        }
+
+    }, [jobId]);
+
 
     const columns = [
         { title: "Ngày phỏng vấn", dataIndex: "interviewDate", key: "interviewDate" },
@@ -40,9 +59,11 @@ const InterviewSchedulePage = () => {
                 <Space>
                     <Link to={`/recruiter/interview-schedule/update/${record.id}`}>
                         <Button>Cập nhật</Button>
-
                     </Link>
-                    <Button onClick={() => fetchSlotsByInterviewScheduleId(record.id)}>Chỉnh sửa danh sách phỏng vấn</Button>
+                    <Button onClick={async () =>{
+                        await fetchSlotsByInterviewSchedule(record)
+                        setIsModalOpen(true)
+                    }}>Chỉnh sửa danh sách phỏng vấn</Button>
 
 
 
@@ -62,6 +83,7 @@ const InterviewSchedulePage = () => {
         await handleRequest(()=>deleteSlotById(id),(res)=>{
             console.log(res)
             setApplicants( removeById(applicants,id))
+            fetchApproveApplication(jobId)
 
         })
 
@@ -94,32 +116,46 @@ const InterviewSchedulePage = () => {
             responsive: ["xs", "sm", "md", "lg", "xl"],  // Hiển thị trên tất cả các kích thước màn hình
         },
         {
-            title: "CV",
-            dataIndex: "resume",
-            key: "resume",
-            render: (resume) => resume ? <a href={resume?.link} target="_blank" rel="noopener noreferrer">Xem CV</a> : "Không có CV",
+            title: "Trạng thái",
+            dataIndex: "status",
+            key: "status",
             responsive: ["md", "lg", "xl"],  // Chỉ hiển thị từ màn hình trung bình trở lên
         },
         {
-            title: "Action",
+            title: "Hành động",
             key: "action",
             render: (_, record) => (
-                <Button onClick={() => handleRemoveCandidate(record.id)}>
-                    Loại bỏ
-                </Button>
+                <>
+
+
+                    {schedule?.status==="COMPLETED"? <Button onClick={async () => {
+                        await handleRequest(()=>updateSlotStatusById(record.id,{status:"NO_SHOW"}),(res)=>{
+                            console.log(res);
+                            fetchSlotsByInterviewSchedule(schedule)
+                        })
+                    }}>
+                        Người này vắng trong phỏng vấn
+                    </Button>: <Button onClick={() => handleRemoveCandidate(record.id)}>
+                        Loại bỏ
+                    </Button>
+
+                    }
+
+                </>
+
             ),
             responsive: ["sm", "md", "lg", "xl"],  // Hiển thị trên các màn hình nhỏ trở lên
         },
     ];
 
 
-    const fetchSlotsByInterviewScheduleId = async (id) => {
-        await handleRequest(() => getAllSlotsByInterviewScheduleId(id), (res) => {
-            setApplicants(res.data || []);
+    const fetchSlotsByInterviewSchedule = async (schedule) => {
+        await handleRequest(() => getAllSlotsByInterviewScheduleId(schedule.id), (res) => {
+            setApplicants(res.data);
             console.log(res.data)
             setJobId(res.data[0].jobId)
-            setScheduleId(id)
-            setIsModalOpen(true);
+            setSchedule(schedule)
+
         });
     };
 
@@ -136,11 +172,12 @@ const InterviewSchedulePage = () => {
     return (
         <div style={{ padding: "40px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <h1>Quản lý lịch phỏng vấn </h1>
+                <h1 style={{marginBottom:20}}>Quản lý lịch phỏng vấn </h1>
                 <Link to={"/recruiter/interview-schedule/create"}>
                     <Button type="primary">Đặt lịch phỏng vấn</Button>
                 </Link>
             </div>
+            <p>Nếu có ứng viên vắng mặt trong cuộc phỏng vấn bạn có thể báo cáo bằng cách cập nhật danh sách phỏng vấn</p>
 
             <Row gutter={[40, 40]}>
                 <Col xs={24} lg={24}>
@@ -155,10 +192,14 @@ const InterviewSchedulePage = () => {
                 width={1000}
             >
 
-                <h2>Danh sách ứng viên sẽ tham gia</h2>
+                <h2>{schedule?.status==="COMPLETED"?"Danh sách ứng viên tham gia":"Danh sách ứng viên sẽ tham gia"}</h2>
                 <Table style={{minHeight:200}} dataSource={applicants}  columns={applicantColumns} rowKey="id" pagination={false}  />
 
-                <ChooseApplication jobId={jobId} scheduleId={scheduleId} />
+                {
+                    schedule?.status!=="COMPLETED"&&
+                    <ChooseApplication fetchSlotsAgain={()=>fetchSlotsByInterviewSchedule(schedule)} approvedApplications={approvedApplications} setApprovedApplications={setApprovedApplications} scheduleId={schedule?.id} />
+
+                }
             </Modal>
         </div>
     );

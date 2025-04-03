@@ -3,21 +3,15 @@ import useApiRequest from "../../hooks/UseHandleApi.js";
 import {getAllSlotsByUser, updateSlotStatusById} from "../../api/InterviewSlotService.js";
 import {Button, Space, Table} from "antd";
 import dayjs from "dayjs";
+import InterviewRatingModal from "./InterviewRatingModal.jsx";
 
 const InterviewScheduleUserPage=()=>{
     const {handleRequest}=useApiRequest();
     const [interviewSlots,setInterviewSlots]=useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [slotCurrent,setSlotCurrent]=useState(null);
 
-    const updateSlotStatus=async (id,status)=>{
-        await handleRequest(()=>updateSlotStatusById(id,{status}),(res)=>{
-            setInterviewSlots((prevSlots) =>
-                prevSlots.map((slot) =>
-                    slot.id === id ? { ...slot, status } : slot
-                )
-            );
 
-        })
-    }
 
     const columns = [
 
@@ -54,13 +48,13 @@ const InterviewScheduleUserPage=()=>{
             key: "officeAddress",
             responsive: ["sm", "md", "lg"],
         },
-        {
+        /*{
             title: "Trạng thái",
             dataIndex: "status",
             key: "status",
             responsive: ["md", "lg"], // Ẩn trên mobile
             render:(text)=>text||"N/A"
-        },
+        },*/
         {
             title: "Cập nhật lúc",
             dataIndex: "updatedAt",
@@ -83,7 +77,11 @@ const InterviewScheduleUserPage=()=>{
             render: (_, record) => (
                 record.status === "COMPLETED" ? (
                     <Button type="primary"
-                            //onClick={() => handleReview(record.id)}
+                            onClick={() => {
+                                handleOpen();
+                                setSlotCurrent(record)
+                                console.log(record)
+                            }}
                     >
                         Đánh giá
                     </Button>
@@ -103,10 +101,22 @@ const InterviewScheduleUserPage=()=>{
         fetchSlots();
     }, []);
 
+    const handleOpen = () => setIsModalVisible(true);
+    const handleClose = () => setIsModalVisible(false);
+    const handleSubmit = (values) => {
+        console.log("Submitted Rating:", values);
+        handleClose();
+    };
+
     return (
         <div style={{padding: "20px"}}>
             <h1>Lịch phỏng vấn</h1>
             <Table columns={columns} dataSource={interviewSlots} rowKey="id"/>;
+            <InterviewRatingModal
+                visible={isModalVisible}
+                onClose={handleClose}
+                slot={slotCurrent}
+            />
         </div>
     )
 }

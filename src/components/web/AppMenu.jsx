@@ -44,7 +44,7 @@ const AppMenu=({isInline})=>{
         {
             key: "logout",
             icon: <LogoutOutlined />,
-            label: <span onClick={handleLogout}>Đăng xuất</span>,
+            label: <span>Đăng xuất</span>,
         },
     ]
 
@@ -102,7 +102,7 @@ const AppMenu=({isInline})=>{
         {
             key: "logout",
             icon: <LogoutOutlined />,
-            label: <span onClick={handleLogout}>Đăng xuất</span>,
+            label: <span>Đăng xuất</span>,
         },
     ];
 
@@ -164,7 +164,8 @@ const AppMenu=({isInline})=>{
         {
             key: "logout",
             icon: <LogoutOutlined />,
-            label: <span onClick={handleLogout}>Đăng xuất</span>,
+            label: <span>Đăng xuất</span>,
+
         },
     ];
     const dropdownItems = user?.roles?.[0]?.name === "USER"
@@ -196,6 +197,13 @@ const AppMenu=({isInline})=>{
     return  <Menu mode={isInline?"inline":"horizontal"}
                   theme="dark"
                   selectedKeys={[location.pathname]}
+                  onClick={({key})=>{
+                      console.log(key)
+                      if(key==="logout"){
+                          handleLogout();
+                      }
+
+                  }}
                   items={navItems} style={{
             background:"transparent",
             borderBottom: "none",
