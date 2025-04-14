@@ -6,7 +6,6 @@ import {
     EnvironmentOutlined,
     FieldTimeOutlined, FlagOutlined,
     SolutionOutlined,
-    TagOutlined
 } from "@ant-design/icons";
 import {Button, Tag, Typography} from "antd";
 import dayjs from "dayjs";
@@ -108,7 +107,7 @@ const JobDetailScroll=({setDirection,job,view})=> {
                             padding: "4px 8px",
                             display: "inline-flex"
                         }}>
-                            {  getExperienceLabel(job?.experienceLevel) }
+                            {  getExperienceLabel(job?.experienceLevel).text }
                         </Tag>
                     </div>
 
@@ -130,44 +129,13 @@ const JobDetailScroll=({setDirection,job,view})=> {
                             padding: "4px 8px",
                             display: "inline-flex"
                         }}>
-                            {getJobTypeLabel(job?.jobType) }
+                            {getJobTypeLabel(job?.jobType).text }
                         </Tag>
                     </div>
 
 
                 </div>
-                <div style={{display: "flex", alignItems: "start", gap: "10px"}}>
-                    <div>
-                        <TagOutlined style={{fontSize: 16}}/>
-                    </div>
-                    <div style={{display: "flex", flexDirection: "column", gap: "5px"}}>
-                        <Text strong>Tag</Text>
-                        <div>
-                            {job?.tags?.map((tag, index) => (
-                                <Tag
-                                    key={index} // Hoặc key={tag} nếu tag là duy nhất
-                                    color="default"
-                                    style={{
-                                        width: "max-content",
-                                        background: "#ECECEC",
-                                        fontSize: 14,
-                                        fontWeight: "500",
-                                        color: "#555",
-                                        padding: "4px 8px",
-                                        display: "inline-flex"
-                                    }}
-                                >
-                                    {tag?.name}
-                                </Tag>
-                            ))}
 
-                        </div>
-
-
-                    </div>
-
-
-                </div>
 
 
             </div>

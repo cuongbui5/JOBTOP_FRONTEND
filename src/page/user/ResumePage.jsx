@@ -16,6 +16,7 @@ const ResumePage = ()=>{
     const [editingResume, setEditingResume] = useState(null);
     const [mainResumeId, setMainResumeId] = useState(null);
 
+
     const handleSetMainResume = (resumeId) => {
         localStorage.setItem("resumeId", resumeId);
         setMainResumeId(resumeId);
@@ -51,7 +52,6 @@ const ResumePage = ()=>{
             return;
         }
         if (editingResume) {
-
             await handleRequest(() => updateResumeById(editingResume.id, { name: resumeName, link }), (res) => {
                 setResumes(resumes.map((r) => (r.id === editingResume.id ? { ...r, name: resumeName, link } : r)));
                 console.log(res)
@@ -84,7 +84,8 @@ const ResumePage = ()=>{
 
         await handleRequest(()=>uploadFile(file),(res)=>{
             setLink(res.data)
-        })
+        },null,true)
+
 
 
         return false;

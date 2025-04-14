@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const BASE_URL = "http://127.0.0.1:7000/";
-
+const MAX_RETRY=3;
 const api = axios.create({
     baseURL: BASE_URL,
     withCredentials:true,
@@ -25,11 +25,19 @@ api.interceptors.response.use(
     (response) => {
         return response.data;
     },
-    (error) => {
-
-
+    async (error) => {
         if (error.response) {
+            const config = error.config;
             console.log(error.response)
+            if (!config.__retryCount) {
+                config.__retryCount = 0;
+            }
+
+            if(error.response.data.message.includes("Connection reset")&&config.__retryCount < MAX_RETRY){
+                console.log("retry")
+                await new Promise(res => setTimeout(res, 1000));
+                return api(config)
+            }
             return Promise.reject({
                 errorCode: error.response.data.status,
                 errorMessage: error.response.data.message || "Something went wrong!",

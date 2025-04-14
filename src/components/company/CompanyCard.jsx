@@ -1,0 +1,51 @@
+import {Card, Space} from "antd";
+import {AppstoreOutlined, EnvironmentOutlined, GlobalOutlined, LinkOutlined, TeamOutlined} from "@ant-design/icons";
+
+import {Link} from "react-router-dom";
+
+// eslint-disable-next-line react/prop-types
+const CompanyCard = ({ company }) => {
+
+    return (
+        <Card
+            style={{position:"relative", width: "100%", borderRadius: 10, boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+
+            cover={
+                <div style={{height: 240, background: "#f5f5f5"}}>
+                    <img src={"/images/bg-company.jpg"} alt="Logo" style={{  width: "100%",
+                        height: "100%",
+                        objectFit: "cover"}}
+                    />
+                </div>
+            }
+        >
+            <img style={{
+                position:"absolute",
+                top:200,
+                right:30,
+                borderRadius:"8px",
+                width:"75px",
+                height:"75px"
+            }} src={company?.logo||"/images/company-logo-default.jpg"}  alt={"logo"}/>
+
+            <h2 style={{marginBottom:"10px"}}>
+                <Link style={{color:"black" }} to={`/company/${company?.id}`}>{company?.name}</Link>
+            </h2>
+
+            <Space direction="vertical" size="small" style={{width: "100%"}}>
+                <p><AppstoreOutlined/> {company?.category?.name}</p>
+                <p><GlobalOutlined/> {company?.nation}</p>
+                <p><TeamOutlined/> {company?.size}</p>
+
+
+                <p><LinkOutlined/>
+                    <a style={{color: "black",}} href={company?.website} target="_blank"
+                       rel="noopener noreferrer"> {company?.website}</a>
+                </p>
+                <p><EnvironmentOutlined/> {company?.address}</p>
+            </Space>
+        </Card>
+    );
+};
+
+export default CompanyCard;

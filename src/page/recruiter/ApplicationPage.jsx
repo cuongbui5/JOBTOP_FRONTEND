@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import useHandleApi from "../../hooks/UseHandleApi.js";
-import {Button, Flex, Modal, Select, Table} from "antd";
+import {Button, Flex, Modal, Select, Table, Tag} from "antd";
 import {
     BulbOutlined,
     CheckCircleOutlined,
@@ -10,21 +10,22 @@ import {
 } from "@ant-design/icons";
 import {
     approveApplication,
-    getApplicationsByRecruiter,
+    getApplicationsByCompany,
     rejectApplication,
     viewCvApplication
 } from "../../api/ApplicationService.js";
 import dayjs from "dayjs";
 import {Link} from "react-router-dom";
+import {getApplicationStatusLabel} from "../../utils/helper.js";
 
 const { confirm } = Modal;
 
 
 const { Option } = Select;
 
-const RecruiterApplicationPage=()=>{
+const ApplicationPage=()=>{
     const [applications,setApplications]=useState(null);
-    const [pagination, setPagination] = useState({ current: 1, pageSize: 3, total: 0 });
+    const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
     const [viewStatus, setViewStatus] = useState(null);
     const {handleRequest}=useHandleApi();
 
@@ -44,23 +45,19 @@ const RecruiterApplicationPage=()=>{
     }
 
     async function handleReject(record) {
-        if(record.status==="PENDING"||record.status==="VIEWED"){
-            await handleRequest(()=>rejectApplication(record?.id),(res)=>{
-                console.log(res)
-                fetchApplications(pagination.current, pagination.pageSize,viewStatus);
-            },null,true)
-        }
+        await handleRequest(()=>rejectApplication(record?.id),(res)=>{
+            console.log(res)
+            fetchApplications(pagination.current, pagination.pageSize,viewStatus);
+        },null,true)
 
     }
 
 
     async function handleApprove(record) {
-        if(record.status==="PENDING"||record.status==="VIEWED"){
-            await handleRequest(()=>approveApplication(record?.id),(res)=>{
-                console.log(res)
-                fetchApplications(pagination.current, pagination.pageSize,viewStatus);
-            },null,true)
-        }
+        await handleRequest(()=>approveApplication(record?.id),(res)=>{
+            console.log(res)
+            fetchApplications(pagination.current, pagination.pageSize,viewStatus);
+        },null,true)
 
     }
 
@@ -93,14 +90,19 @@ const RecruiterApplicationPage=()=>{
             )
         },
         {
-            title: "Tên ứng viên",
-            dataIndex: "fullName",
+            title: "Email",
+            dataIndex: "email",
             responsive: ["xs", "sm", "md", "lg"],
-            key: "fullName",
-            render: (fullName) => fullName ? fullName : "Ứng viên này chưa cập nhật profile",
+            key: "email",
+
 
         },
-        {title: "Trạng thái", dataIndex: "status", key: "status"},
+        {title: "Trạng thái", dataIndex: "status", key: "status",
+            render: (status) => {
+                const {text,color}=getApplicationStatusLabel(status)
+                return <Tag color={color}>{text}</Tag>;
+            }
+        },
 
         {
             title: "Ngày ứng tuyển",
@@ -115,15 +117,11 @@ const RecruiterApplicationPage=()=>{
             key: "actions",
             render: (_, record) => (
                 <Flex gap="small" wrap="wrap">
-                    <Button type={"dashed"}   onClick={() => showConfirm("reject", record)}  icon={<CloseCircleOutlined/>}>Từ chối</Button>
-                    <Button type={"primary"}  onClick={() => showConfirm("approve", record)}  icon={< CheckCircleOutlined/>}>Đồng ý</Button>
                     <a href={record?.resume?.link} target="_blank" rel="noopener noreferrer">
-                        <Button onClick={()=>handleViewCv(record)} icon={<EyeOutlined/>}>Xem CV</Button>
+                        <Button type={"link"} onClick={() => handleViewCv(record)} icon={<EyeOutlined/>}>Xem CV</Button>
                     </a>
-                    <Button icon={<BulbOutlined/>}>AI nhận xét</Button>
-                    <Link to={`/profile/user/${record.userId}`}>
-                        <Button type={"link"}>Xem thông tin ứng viên</Button>
-                    </Link>
+                    <Button onClick={() => showConfirm("reject", record)} icon={<CloseCircleOutlined/>}>Từ chối</Button>
+                    <Button type={"primary"} onClick={() => showConfirm("approve", record)} icon={< CheckCircleOutlined/>}>Đồng ý</Button>
 
                 </Flex>
             ),
@@ -132,9 +130,9 @@ const RecruiterApplicationPage=()=>{
     ];
 
 
-    const fetchApplications = async (page, size,status) => {
+    const fetchApplications = async (page, size, status) => {
         await handleRequest(
-            () => getApplicationsByRecruiter(page,size,status),
+            () => getApplicationsByCompany(page,size,status),
             (res) => {
                 console.log(res);
                 setApplications(res.data.content);
@@ -155,13 +153,17 @@ const RecruiterApplicationPage=()=>{
     }, [viewStatus]);
 
     const handleTableChange =async (pagination) => {
+        console.log(pagination)
         await fetchApplications(pagination.current, pagination.pageSize,viewStatus);
     };
     const viewStatusOptions = [
         { value: "PENDING", label: "Chưa xem" },
         { value: "VIEWED", label: "Đã xem" },
-        { value: "APPROVED", label: "Đã đồng ý phỏng vấn" },
+        { value: "APPROVED", label: "Được chấp nhận" },
         { value: "REJECTED", label: "Từ chối" },
+        { value: "ADDED_TO_INTERVIEW", label: "Đã thêm vào phỏng vấn" },
+        { value: "NO_SHOW", label: "Vắng mặt khi phỏng vấn" },
+        { value: "COMPLETED", label: "Đã hoàn thành" },
     ];
 
 
@@ -172,15 +174,8 @@ const RecruiterApplicationPage=()=>{
     return (
         <div style={{maxWidth: "100%", height: "100%", margin: "auto", backgroundColor: "#fff"}}>
             <div style={{padding: 20}}>
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom:20
-
-                }}>
-
-                    <h1 style={{margin: "10px 0"}}>Danh sách ứng tuyển</h1>
-
+                <h1 style={{margin: "10px 0"}}>Danh sách ứng tuyển</h1>
+                <div style={{display:"flex",flexDirection:"column",alignItems:"end"}}>
                     <Select value={viewStatus} allowClear placeholder="Chọn trạng thái" onChange={(value) => {
                         setViewStatus(value)
                     }} style={{width: 200, marginBottom: 16}}>
@@ -190,16 +185,18 @@ const RecruiterApplicationPage=()=>{
                             </Option>
                         ))}
                     </Select>
+                    <Table
+                        style={{width:"100%"}}
+                        scroll={{x: "max-content"}}
+                        onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={applications}
+                        pagination={pagination}/>
 
                 </div>
-                <h3>Chú ý: Nhà tuyển dụng không thể thay đổi trạng thái đơn ứng tuyển khi trạng thái hiện tại là APPROVED hoặc REJECTED </h3>
 
-                <Table onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={applications}
-                       pagination={pagination}/>
             </div>
 
 
         </div>
     )
 }
-export default RecruiterApplicationPage;
+export default ApplicationPage;

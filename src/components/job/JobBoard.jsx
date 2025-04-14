@@ -3,8 +3,7 @@ import {Button, Col, Dropdown, Layout, Row, Typography} from "antd";
 import {DownOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import JobDetailSection from "./JobDetailSection.jsx";
-const { Content, Sider } = Layout;
-import {getStoredUser} from "../../utils/helper.js";
+const { Content } = Layout;
 import JobList from "./JobList.jsx";
 import useJobStore from "../../store/JobStore.jsx";
 
@@ -13,7 +12,6 @@ import useJobStore from "../../store/JobStore.jsx";
 
 // eslint-disable-next-line react/prop-types
 const JobBoard = ({ jobs }) => {
-
     const {setFilters,filters,totalElements,selectedJobId}=useJobStore(state => state)
     const sortOptions = [
         { key: "date_desc", label: "Newest" },
@@ -30,9 +28,9 @@ const JobBoard = ({ jobs }) => {
 
     return (
         <Layout style={{ minHeight: "120vh", backgroundColor: "white" }}>
-            <Row gutter={20}>
-                {/* 📌 Danh sách việc làm (Chiếm 50% trên desktop, 100% trên mobile) */}
-                <Col xs={24} md={11} style={{ background: "#fff", padding: "16px", overflowY: "auto" }}>
+            <Row gutter={[32,32]}>
+
+                <Col xs={24} sm={24} lg={11} style={{ background: "#fff", padding: "16px", overflowY: "auto" }}>
                     <div>
 
                             <Typography.Text>
@@ -69,7 +67,7 @@ const JobBoard = ({ jobs }) => {
 
                 {/* 📌 Chi tiết công việc (Ẩn trên mobile, chỉ hiển thị khi có job được chọn) */}
                 {selectedJobId && (
-                    <Col xs={0} md={13} style={{ background: "white" }}>
+                    <Col xs={0} sm={0} lg={13} style={{ background: "white" }}>
                         <Content
                             style={{
                                 width: "100%",

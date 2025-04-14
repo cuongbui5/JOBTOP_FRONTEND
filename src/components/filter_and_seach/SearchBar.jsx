@@ -59,7 +59,7 @@ const SearchBar = () => {
 
             <Input
                 prefix={<SearchOutlined style={{color: "#555", marginRight: "5px"}}/>}
-                placeholder="Job title, keywords, or company"
+                placeholder="Nhập tên công việc bạn muốn"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 style={{
@@ -88,7 +88,7 @@ const SearchBar = () => {
                 }}
             >
                 <Input
-                    placeholder='City, province, or "remote"'
+                    placeholder='Chọn thành phố bạn muốn'
                     prefix={<EnvironmentOutlined style={{color: "#555", marginRight: "5px"}}/>}
                     style={{
                         border: "none",

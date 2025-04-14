@@ -13,6 +13,7 @@ const AnimationWrapper = ({ children, index = 0, animationType = "fadeInUp" }) =
 
     return (
         <motion.div
+            style={{width:"100%"}}
             initial={animations[animationType]?.initial || animations.fadeInUp.initial}
             animate={animations[animationType]?.animate || animations.fadeInUp.animate}
             exit={animations[animationType]?.exit || animations.fadeInUp.exit}

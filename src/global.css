@@ -6,32 +6,11 @@
 
 }
 
-@media (max-width: 480px) {
-    .job-container {
-        padding-inline: 20px;
-    }
+.ant-select-selector{
+    border-radius:0 !important;
 }
 
-/* Tablet (màn hình từ 481px đến 1024px) */
-@media (min-width: 481px) and (max-width: 1024px) {
-    .job-container {
-        padding-inline: 30px;
-    }
-}
 
-/* Laptop (màn hình từ 1025px đến 1366px) */
-@media (min-width: 1025px) and (max-width: 1366px) {
-    .job-container {
-        padding-inline: 80px;
-    }
-}
-
-/* Desktop (màn hình lớn hơn hoặc bằng 1367px) */
-@media (min-width: 1367px) {
-    .job-container {
-        padding-inline: 120px;
-    }
-}
 
 h1, h2, h3 {
     font-family: 'Montserrat', sans-serif;
@@ -41,6 +20,9 @@ h1, h2, h3 {
     display: none;
 }
 
+a:hover{
+    text-decoration: underline;
+}
 
 /*Loading animation*/
 .animated {

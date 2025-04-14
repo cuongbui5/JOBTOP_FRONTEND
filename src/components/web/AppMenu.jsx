@@ -7,38 +7,29 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
 import {getStoredUser} from "../../utils/helper.js";
 
 
 // eslint-disable-next-line react/prop-types
 const AppMenu=({isInline})=>{
-    const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
-
-
+    const user=getStoredUser();
 
 
     const handleLogout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        setUser(null);
+        localStorage.clear()
         navigate("/login");
 
         window.location.reload();
     };
 
 
-    useEffect(() => {
-        const storedUser=getStoredUser();
-        setUser(storedUser);
 
-    }, []);
     const adminMenuItem = [
         {
-            key: "/admin/home",
-            label: <Link style={{ color: "#A0A0A0", fontSize: "16px" }} to="/admin/home">Dashboard</Link>,
+            key: "/admin/dashboard",
+            label: <Link style={{ color: "#A0A0A0", fontSize: "16px" }} to="/admin/dashboard">Dashboard</Link>,
             icon: <DashboardOutlined style={{ color: "#A0A0A0", fontSize: "16px" }} />,
         },
         {
@@ -47,9 +38,6 @@ const AppMenu=({isInline})=>{
             label: <span>Đăng xuất</span>,
         },
     ]
-
-
-
 
     const recruiterMenuItem = [
         {
@@ -71,12 +59,6 @@ const AppMenu=({isInline})=>{
 
         },
         {
-            key: "messages",
-            label: "Tin nhắn",
-            icon: <MessageOutlined />,
-
-        },
-        {
             key: "/recruiter/profile",
             label: <Link to="/recruiter/profile">Hồ sơ công ty</Link>,
             icon: <BankOutlined />,
@@ -95,6 +77,11 @@ const AppMenu=({isInline})=>{
 
         },
         {
+            key: "conversations",
+            icon: <MessageOutlined />,
+            label: <Link to="/conversations">Xem tin nhắn</Link>,
+        },
+        {
             key: "notifications",
             icon: <BellOutlined />,
             label: <Link to="/notifications">Thông báo</Link>,
@@ -105,9 +92,6 @@ const AppMenu=({isInline})=>{
             label: <span>Đăng xuất</span>,
         },
     ];
-
-
-
 
     const userMenuItems = [
         {
@@ -136,25 +120,19 @@ const AppMenu=({isInline})=>{
             label: <Link to="/applied-jobs">Việc làm đã ứng tuyển</Link>,
         },
         {
-            key: "/interview-schedule/view",
-            label: <Link to="/interview-schedule/view">Xem lịch phỏng vấn</Link>,
-            icon: <ScheduleOutlined />,
-
-        },
-        {
             key: "/followed-companies",
             icon: <BankOutlined />,
             label: <Link to="/followed-companies">Công ty đã theo dõi</Link>,
         },
         {
-            key: "change-password",
+            key: "update-account",
             icon: <KeyOutlined />,
-            label: <Link to="/change-password">Đổi mật khẩu</Link>,
+            label: <Link to="/update-account">Cập nhật tài khoản</Link>,
         },
         {
-            key: "messages",
+            key: "conversations",
             icon: <MessageOutlined />,
-            label: <Link to="/messages">Nhắn tin với nhà tuyển dụng</Link>,
+            label: <Link to="/conversations">Nhắn tin với nhà tuyển dụng</Link>,
         },
         {
             key: "notifications",
@@ -168,12 +146,17 @@ const AppMenu=({isInline})=>{
 
         },
     ];
-    const dropdownItems = user?.roles?.[0]?.name === "USER"
+
+    const dropdownItems = user?.role === "CANDIDATE"
         ? userMenuItems
-        : user?.roles?.[0]?.name === "ADMIN"
+        : user?.role === "ADMIN"
             ? adminMenuItem
             : recruiterMenuItem;
     const navItems = [
+        {
+            key: "/sematic-search",
+            label: <Link to={"/sematic-search"}>Tìm kiếm bằng AI</Link>,
+        },
         {
             key: "/companies",
             label: <Link to={"/companies"}>Company</Link>,

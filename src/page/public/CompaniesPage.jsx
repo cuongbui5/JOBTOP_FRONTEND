@@ -1,21 +1,21 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import { useWebStore } from "../../store/WebStore.jsx";
 import { List, Select } from "antd";
 import LoadingWrapper from "../../components/loading/LoadingWrapper.jsx";
 import AnimationWrapper from "../../components/animation/AnimationWrapper.jsx";
-import CompanyCard from "../../components/recruiter/CompanyCard.jsx";
+import CompanyCard from "../../components/company/CompanyCard.jsx";
 
 const { Option } = Select;
 
 const CompaniesPage = () => {
-    const { recruiterProfiles, categories } = useWebStore(state => state);
+    const { companies, categories } = useWebStore(state => state);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    console.log(recruiterProfiles)
 
-    // Lọc danh sách công ty theo danh mục đã chọn
+
+
     const filteredCompanies = selectedCategory
-        ? recruiterProfiles.filter(company => company.category.id === selectedCategory)
-        : recruiterProfiles;
+        ? companies.filter(company => company.category.id === selectedCategory)
+        : companies;
 
 
 
@@ -39,7 +39,7 @@ const CompaniesPage = () => {
                     onChange={(value) => setSelectedCategory(value)}
                     allowClear
                 >
-                    {categories.map((category) => (
+                    {categories?.map((category) => (
                         <Option key={category.id} value={category.id}>
                             {category.name}
                         </Option>

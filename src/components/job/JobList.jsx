@@ -1,10 +1,12 @@
 import {List, Pagination} from "antd";
-import {motion} from "framer-motion";
+
 import JobCard from "./JobCard.jsx";
 import {page_size_view} from "../../utils/constans.js";
 import LoadingWrapper from "../loading/LoadingWrapper.jsx";
 import useJobStore from "../../store/JobStore.jsx";
 import AnimationWrapper from "../animation/AnimationWrapper.jsx";
+
+
 
 // eslint-disable-next-line react/prop-types
 const JobList=({jobs})=> {
@@ -21,22 +23,20 @@ const JobList=({jobs})=> {
             }}
             dataSource={jobs}
             renderItem={(job, index) => (
-                <AnimationWrapper index={index}>
-                    <div
-                        style={{
-                            cursor: "pointer",
-                            borderRadius: "12px",
-                            border: selectedJobId === job.id ? "1px solid #333" : "1px solid #ddd",
-                            marginBottom: "8px",
-                            transition: "background-color 0.3s ease", // Hiệu ứng mượt mà
-                        }}
-                        onClick={()=>setSelectedJobId(job?.id)}>
+                <List.Item  style={{
+                    cursor: "pointer",
+                    borderRadius: "12px",
+                    border: selectedJobId === job.id ? "1px solid #333" : "1px solid #ddd",
+                    marginBottom: "8px",
+                    transition: "background-color 0.3s ease", // Hiệu ứng mượt mà
+                }}
+                           onClick={()=>setSelectedJobId(job?.id)}>
+                    <AnimationWrapper index={index}>
                         <JobCard job={job}/>
-                    </div>
+                    </AnimationWrapper>
 
+                </List.Item>
 
-
-                </AnimationWrapper>
 
 
             )}

@@ -2,8 +2,9 @@ import {Button, Drawer, Dropdown, Select, Table, Tag} from "antd";
 import {useEffect, useState} from "react";
 import useHandleApi from "../../hooks/UseHandleApi.js";
 import {CheckOutlined, CloseOutlined, EyeOutlined, MoreOutlined} from "@ant-design/icons";
-import {approveJob, getAllJobs, rejectJob} from "../../api/JobService.js";
+import {getAllJobs, updateJobStatus} from "../../api/JobService.js";
 import JobDetailSection from "../../components/job/JobDetailSection.jsx";
+import {getJobStatusLabel} from "../../utils/helper.js";
 
 const JobPage=()=>{
     const [jobs,setJobs]=useState(null);
@@ -21,28 +22,23 @@ const JobPage=()=>{
         setOpen(false);
     };
 
-    const handleActionClick = (key, record) => {
-        if (key === "approve") handleApprove(record);
-        if (key === "reject") handleReject(record);
-        if (key === "view") viewJobDetail(record);
+    const handleActionClick =async (key, record) => {
+        if (key === "VIEW"){
+            viewJobDetail(record);
+        } else{
+            await updateJobStatusById(record,key)
+
+        }
     };
-    async function handleReject(record) {
-        await handleRequest(
-            () => rejectJob(record.id),
-            (res) => {
-                fetchJobs(pagination.current, pagination.pageSize,selectedStatus);
-            }
-        );
+    async function updateJobStatusById(job,status) {
+        await handleRequest(()=>updateJobStatus(job.id,{status}),(res)=>{
+            console.log(res)
+            job.status=status
+        })
+
     }
 
-    async function handleApprove(record) {
-         await handleRequest(
-            () => approveJob(record.id),
-            (res) => {
-                fetchJobs(pagination.current, pagination.pageSize,selectedStatus);
-            }
-        );
-    }
+
 
     function viewJobDetail(record) {
         setJobId(record.id)
@@ -52,25 +48,29 @@ const JobPage=()=>{
     }
     const getActionMenu = (record) => ({
         items: [
-            { key: "approve", label: "Phê duyệt", icon: <CheckOutlined  style={{color:"green"}} /> },
-            { key: "reject", label: "Từ chối", icon: <CloseOutlined style={{color:"red"}} /> },
-            { key: "view", label: "Xem chi tiết", icon: <EyeOutlined /> }
+            { key: "APPROVED", label: "Phê duyệt", icon: <CheckOutlined  style={{color:"green"}} /> },
+            { key: "REJECTED", label: "Từ chối", icon: <CloseOutlined style={{color:"red"}} /> },
+            { key: "VIEW", label: "Xem chi tiết", icon: <EyeOutlined /> }
         ],
         onClick: ({ key }) => handleActionClick(key, record),
     });
 
     const columnsResponsive = [
-        {title: "ID", dataIndex: "id", key: "id"},
-        { title: "Job Title", dataIndex: "title", key: "title", responsive: ["xs", "sm", "md", "lg", "xl"] },
-        { title: "Status",dataIndex: "status", key: "status", render: (status) => {
-                const color = status === 'Đã duyệt' ? 'green' : status === 'Chờ duyệt' ? 'orange' : 'red';
-                return <Tag color={color}>{status}</Tag>;
+        {title: "Id", dataIndex: "id", key: "id"},
+        { title: "Tên công việc", dataIndex: "title", key: "title", responsive: ["xs", "sm", "md", "lg", "xl"] },
+        { title: "Trạng thái",dataIndex: "status", key: "status", render: (status) => {
+                const {text,color}=getJobStatusLabel(status)
+                return <Tag color={color}>{text}</Tag>;
             },
             responsive: ["xs", "sm", "md", "lg", "xl"]
         },
-        { title: "Company", dataIndex: "companyName", key: "companyName", responsive: ["lg", "xl"] },
+        { title: "Công ty", dataIndex: "company", key: "company",
+            render: (company) => {
+
+                return <p>{company.name}</p>;
+            },responsive: ["lg", "xl"] },
         {
-            title: "Actions",
+            title: "Hành động",
             key: "actions",
             render: (_, record) => (
                 <Dropdown menu={getActionMenu(record)} trigger={['click']}>
@@ -106,8 +106,9 @@ const JobPage=()=>{
         await fetchJobs(pagination.current, pagination.pageSize,selectedStatus);
     };
     return (
-        <div style={{maxWidth: "100%", height: "100%", margin: "auto", backgroundColor: "#fff"}}>
-            <div style={{padding: 20}}>
+        <div style={{maxWidth: "100%", height: "100%", margin: "auto", backgroundColor: "#fff",padding:20}}>
+            <h1 style={{margin:"20px 0"}}>Quản lý tin tuyển dụng</h1>
+            <div >
                 <Select
                     style={{ width: 200, marginBottom: 16 }}
                     placeholder="Lọc theo trạng thái"
@@ -118,10 +119,12 @@ const JobPage=()=>{
                     <Select.Option value="approved">Đã duyệt</Select.Option>
                     <Select.Option value="rejected">Bị từ chối</Select.Option>
                 </Select>
-                <Table onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={jobs}
+                <Table
+                    scroll={{ x: "max-content" }}
+                    onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={jobs}
                        pagination={pagination}/>
             </div>
-            <Drawer size={"large"} title="View job" onClose={onClose} open={open}>
+            <Drawer size={"large"} title="Xem chi tiết công việc" onClose={onClose} open={open}>
                <JobDetailSection view={true} jobId={jobId}/>
             </Drawer>
 

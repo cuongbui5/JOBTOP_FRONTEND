@@ -22,7 +22,7 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
     }
 
     if(savedJob){
-        job={...savedJob,id:savedJob.jobId};
+        job={...savedJob,id:savedJob?.jobId};
         console.log(job)
     }
 
@@ -49,7 +49,7 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
     ];
 
     return (
-        <div style={{padding: "14px 14px", width: "100%", position: 'relative'}}>
+        <div style={{padding: "8px 18px", width: "100%", minHeight:"315px",position: 'relative'}}>
             <Dropdown menu={{
                 items, onClick:async ({key}) => {
                     console.log(key)
@@ -67,11 +67,14 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
                     <MoreOutlined style={{fontSize: 25}}/>
                 </div>
             </Dropdown>
+            <Link to={`/job-detail/${job?.id}`} style={{color: 'black',display: 'inline-block'}}>
+                <h1 style={{margin: "0", fontSize: "26px"}}>{job?.title}</h1>
+            </Link>
 
-            <h1 style={{margin: "0", fontSize: "26px"}}>{job?.title}</h1>
+
             <p style={{margin: "0", color: '#555', fontWeight: "400", fontSize: "16px"}}>{job?.companyName}</p>
             <p style={{margin: "0", color: '#555', fontWeight: "400", fontSize: "14px"}}>{job?.city}</p>
-            <div style={{padding: "5px 0"}}>
+            <div style={{padding: "5px 0",display:"flex",gap:"8px",flexWrap:"wrap"}}>
                 <Tag style={{
                     fontSize: "16px",
                     fontWeight: "500",
@@ -79,10 +82,11 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
                 }}>
                     <SalaryText salaryMin={job?.salaryMin} salaryMax={job?.salaryMax}/>
                 </Tag>
-                <Tag style={{fontSize: "16px", fontWeight: "500", color: "#777"}}>{getJobTypeLabel(job?.jobType)}</Tag>
-                <Tag style={{fontSize: "16px", fontWeight: "500", color: "#777"}}>{getExperienceLabel(job?.experienceLevel) }</Tag>
+                <Tag style={{fontSize: "16px", fontWeight: "500", color: "#777"}}>{getJobTypeLabel(job?.jobType).text}</Tag>
+                <Tag style={{fontSize: "16px", fontWeight: "500", color: "#777"}}>{getExperienceLabel(job?.experienceLevel).text }</Tag>
             </div>
             <Paragraph
+                style={{marginTop:"8px"}}
                 ellipsis={{
                     rows: 5,
                     expandable: false,
@@ -97,8 +101,8 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
             </Paragraph>
 
 
-            <Link to={`/job-detail/${job?.id}`} style={{color: '#1890ff', display: 'inline-block'}}>Xem chi
-                tiết</Link>
+
+
 
         </div>
     );

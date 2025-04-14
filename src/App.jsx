@@ -2,22 +2,23 @@ import {RouterProvider} from 'react-router-dom';
 import "./global.css";
 import router from "./router/router.jsx";
 import Loading from "./components/loading/Loading.jsx";
-import {useEffect} from "react";
 import {useWebStore} from "./store/WebStore.jsx";
-/*import { pdfjs } from 'react-pdf';
+import {useEffect} from "react";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-).toString();
-*/
+
 
 
 function App() {
-    const {getDataWebsite}=useWebStore(state => state)
+    const {getDataWebsite}=useWebStore(state => state);
     useEffect(() => {
         getDataWebsite()
-    }, []);
+    }, [getDataWebsite]);
+
+
+
+
+
+
 
     return (
         <>

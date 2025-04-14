@@ -5,7 +5,7 @@ import LoadingWrapper from "../../components/loading/LoadingWrapper.jsx";
 import {List} from "antd";
 import AnimationWrapper from "../../components/animation/AnimationWrapper.jsx";
 import JobCard from "../../components/job/JobCard.jsx";
-import CompanyCard from "../../components/recruiter/CompanyCard.jsx";
+import CompanyCard from "../../components/company/CompanyCard.jsx";
 
 const FollowedCompanyPage=()=>{
     const [companies,setCompanies]=useState([]);

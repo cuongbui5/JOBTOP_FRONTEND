@@ -4,6 +4,9 @@ import {Link, useNavigate} from "react-router-dom";
 import {login} from "../../api/AuthService.js";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import Logo from "../../components/web/Logo.jsx";
+import useWebSocketStore from "../../store/WebSocketStore.js";
+
+
 
 
 
@@ -17,13 +20,19 @@ const LoginPage = () => {
 
 
 
+
+
+
     const onFinish =async (values) => {
          await handleRequest(()=> login(values),(res)=>{
+             console.log(res)
              localStorage.clear();
              localStorage.setItem("token",res.data.token);
-             localStorage.setItem("user",JSON.stringify(res.data.user));
+             localStorage.setItem("user",JSON.stringify(res.data.account));
 
-             navigate(res.data.user.roles[0].name === "ADMIN" ? "/admin/home" : "/");
+
+             navigate(res.data.account.role === "ADMIN" ? "/admin/dashboard" : "/");
+
 
         })
 
@@ -66,6 +75,7 @@ const LoginPage = () => {
                     >
                         <Input style={{ borderRadius: "0px",padding:0 }} prefix={<UserOutlined style={{ color: "#555",background:"#ddd",fontSize:"18px",padding:"10px" }}/>} placeholder="Email" size="large"/>
                     </Form.Item>
+
                     <Form.Item
                         name="password"
                         rules={[{required: true, message: "Please enter your password!"}]}

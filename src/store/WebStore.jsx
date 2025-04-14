@@ -1,28 +1,23 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { getAllTags } from "../api/TagService.js";
-import { getAllIndustries } from "../api/IndustryService.js";
 import {getAllCategories} from "../api/CategoryService.js";
 import axios from "axios";
-import {getCompanyFilter, getLocationFilter} from "../api/PublicService.js";
+import {getAllCompanies, getLocationFilter} from "../api/PublicService.js";
 
 export const useWebStore = create(
     persist(
-        (set, get) => ({
-            tags: null,
-            industries: null,
+        (set) => ({
             categories: null,
             cities:null,
-            recruiterProfiles:null,
+            companies:null,
 
             getDataWebsite: async () => {
-                const [tagsRes, industriesRes, categoriesRes,locationRes,recruiterProfilesRes] = await axios.all([getAllTags(), getAllIndustries(), getAllCategories(),getLocationFilter(),getCompanyFilter()]);
+                const [ categoriesRes,locationRes,companiesRes] = await axios.all([ getAllCategories(),getLocationFilter(),getAllCompanies()]);
+                console.log(categoriesRes)
                 set({
-                    tags: tagsRes.data || null,
-                    industries: industriesRes.data || null,
                     categories: categoriesRes.data || null,
                     cities:locationRes.data||null,
-                    recruiterProfiles:recruiterProfilesRes.data||null,
+                    companies:companiesRes.data||null,
                 });
             }
         }),

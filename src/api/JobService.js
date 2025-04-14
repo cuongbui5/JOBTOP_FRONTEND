@@ -1,37 +1,33 @@
 import {api, apiPrivate} from "./AxiosApi.js";
 
-export const getAllJobByUser=(page=1,size=5)=>{
-    return apiPrivate.get(`jobs/getByProfile?page=${page}&size=${size}`);
-}
-export const getAllJobs=(page=1,size=5,status="")=>{
-    return apiPrivate.get(`jobs?page=${page}&size=${size}&status=${status}`);
-}
-
-export const getJob=(id)=>{
-    return api.get(`public/jobs/${id}`);
-}
-export const getFavoriteJob=()=>{
-    return apiPrivate.get(`jobs/getFavoriteJobs}`);
+export const getAllJobs=(page=1,size=5,status,createdBy)=>{
+    return apiPrivate.get(`jobs?page=${page}&size=${size}`,{
+        params:{
+            status:status||undefined,
+            createdBy:createdBy||undefined
+        }
+    });
 }
 
-export const getAllJobTitle=()=>{
-    return apiPrivate.get(`jobs/getAllJobTitle`);
+export const getAllJobsTitle=()=>{
+    return apiPrivate.get("jobs/titles")
 }
 
-
-
-export const approveJob=(id)=>{
-    return apiPrivate.post(`jobs/${id}/approve`);
+export const getJob=(id,view=true)=>{
+    return api.get(`jobs/${id}?view=${view}`);
 }
 
-export const rejectJob=(id)=>{
-    return apiPrivate.post(`jobs/${id}/reject`);
+export const createJob=(data)=>{
+    return apiPrivate.post(`jobs/create`,data);
+}
+export const updateJob=(id,data)=>{
+    return apiPrivate.put(`jobs/update/${id}`,data);
 }
 
-
-export const saveJob=(data)=>{
-    return apiPrivate.post(`jobs`,data);
+export const updateJobStatus=(id,data)=>{
+    return apiPrivate.patch(`jobs/update-status/${id}`,data);
 }
+
 export const deleteJob=(id)=>{
     return apiPrivate.delete(`jobs/${id}`);
 }

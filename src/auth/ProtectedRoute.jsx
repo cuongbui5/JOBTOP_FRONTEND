@@ -12,7 +12,7 @@ const ProtectedRoute = ({  requiredRole  }) => {
         return <Navigate to="/login" replace />;
     }
 
-    if (requiredRole && requiredRole !== user?.roles[0]?.name) {
+    if (requiredRole && requiredRole !== user?.role) {
         return <Navigate to="/unauthorized" replace />;
     }
     return <Outlet/> ;

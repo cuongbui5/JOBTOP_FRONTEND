@@ -34,8 +34,8 @@ export function getRelatedJobs(id,currentPage=1,currentSize=5) {
     return api.get(`public/related-jobs/${id}?page=${currentPage}&size=${currentSize}`);
 }
 
-export function getRecruiterProfileById(id) {
-    return api.get(`public/recruiter-profile/${id}`);
+export function getCompanyById(id) {
+    return api.get(`public/company/${id}`);
 }
 
 export function getUserProfileByUserId(id) {
@@ -43,14 +43,23 @@ export function getUserProfileByUserId(id) {
 }
 
 
-export function getCompanyFilter() {
-    return api.get(`public/getAllCompanies`);
+export function getAllCompanies() {
+    return api.get(`public/companies`);
 }
 
 export const getAllReviewByJobId=(jobId,page=1,size=5)=>{
     return api.get(`public/reviews?jobId=${jobId}&page=${page}&size=${size}`);
 }
 
+export const sematicSearch=(key)=>{
+    return api.get(`public/jobs/sematic-search?key=${key}`);
+}
+
+
 export const getReviewStats=(jobId)=>{
     return api.get(`public/reviews/stats/${jobId}`);
+}
+
+export function getStatusStats(jobId) {
+    return api.get(`public/applications/status-stats?jobId=${jobId}`);
 }

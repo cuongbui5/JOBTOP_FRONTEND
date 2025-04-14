@@ -1,11 +1,11 @@
 import {apiPrivate} from "./AxiosApi.js";
 
 export function saveUserProfile(data) {
-    return apiPrivate.post(`user-profile`, data);
+    return apiPrivate.post(`candidates`, data);
 }
 
 export function getUserProfile() {
-    return apiPrivate.get(`user-profile`);
+    return apiPrivate.get(`candidates`);
 }
 
 

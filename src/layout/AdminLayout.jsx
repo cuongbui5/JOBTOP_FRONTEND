@@ -4,7 +4,7 @@ import {
     DashboardOutlined,
     UserOutlined,
     FileTextOutlined,
-    SettingOutlined,
+    SettingOutlined, LogoutOutlined, WarningOutlined,
 } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider.js";
 import {Content, Footer} from "antd/es/layout/layout.js";
@@ -14,6 +14,12 @@ import { Outlet, useNavigate } from "react-router-dom";
 const AdminLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/login");
+
+        window.location.reload();
+    };
 
     const items = [
         {
@@ -35,10 +41,22 @@ const AdminLayout = () => {
             onClick: () => navigate("/admin/jobs"),
         },
         {
-            key: "settings",
+            key: "packages",
             icon: <SettingOutlined />,
             label: "Quản lý gói",
-            onClick: () => navigate("/admin/settings"),
+            onClick: () => navigate("/admin/packages"),
+        },
+        {
+            key: "reports",
+            icon: <WarningOutlined />, // Biểu tượng cảnh báo cho báo cáo xấu
+            label: "Báo cáo vi phạm",
+            onClick: () => navigate("/admin/reports"),
+        },
+        {
+            key: "logout",
+            icon: <LogoutOutlined />,
+            label: <span>Đăng xuất</span>,
+            onClick: () => handleLogout()
         },
     ];
 

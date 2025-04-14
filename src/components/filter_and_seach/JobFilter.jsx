@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useWebStore } from "../../store/WebStore.jsx";
@@ -39,8 +39,12 @@ const jobTypeOptions = [
 ];
 
 const JobFilter = () => {
-    const { industries, recruiterProfiles } = useWebStore(state => state);
-    const {setFilters,filters}=useJobStore(state => state)
+    const {companies } = useWebStore(state => state);
+    const {setFilters,filters,setCurrentPage}=useJobStore(state => state)
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [filters]);
 
 
     const getLabel = (key, options) => {
@@ -48,7 +52,7 @@ const JobFilter = () => {
     };
 
 
-    // Hàm xử lý chọn dropdown
+
     const handleMenuClick = (key, type) => {
         setFilters({  [type]: key });
     };
@@ -84,22 +88,23 @@ const JobFilter = () => {
                 items: experienceOptions,
                 onClick: ({ key }) => handleMenuClick(key, "exp")
             }}>
-                <Button   iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
+                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
                     {getLabel(filters?.exp, experienceOptions) || "Kinh nghiệm"}
                 </Button>
             </Dropdown>
 
-            <Dropdown menu={{
-                items: recruiterProfiles?.map(company => ({
-                    key: company.id,
-                    label: company.companyName,
+            <Dropdown
+                menu={{
+                items: companies?.map(company => ({
+                    key: company?.id,
+                    label: company?.name,
                 })),
                 onClick: ({ key }) => handleMenuClick(key, "companyId")
             }}>
-                <Button   iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
+                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
                     {getLabel(
                         filters?.companyId,
-                        recruiterProfiles?.map((c) => ({ key: c.id+"", label: c.companyName }))
+                        companies?.map((c) => ({ key: c.id+"", label: c.name }))
                     ) || "Công ty"}
                 </Button>
             </Dropdown>
@@ -108,25 +113,14 @@ const JobFilter = () => {
                 items: jobTypeOptions,
                 onClick: ({ key }) => handleMenuClick(key, "job_type")
             }}>
-                <Button   iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
+                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
                     {getLabel(filters?.job_type, jobTypeOptions) || "Hình thức làm việc"}
                 </Button>
             </Dropdown>
 
-            <Dropdown menu={{
-                items: industries?.map(item => ({
-                    key: item.id,
-                    label: item.name,
-                })),
-                onClick: ({ key }) => handleMenuClick(key, "industryId")
-            }}>
-                <Button   iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(filters?.industryId, industries?.map(i => ({ key: i.id+"", label: i.name }))) || "Theo danh mục nghề"}
-                </Button>
-            </Dropdown>
+
             <Button
                 size="large"
-                style={{ background: "#FF4D4F", color: "white" }}
                 onClick={() => {
                     setFilters({
                         exp: null,

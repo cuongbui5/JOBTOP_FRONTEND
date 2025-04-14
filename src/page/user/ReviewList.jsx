@@ -1,7 +1,7 @@
 
 import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
-import {getAllReviewByJobId, getReviewStats} from "../../api/PublicService.js";
+import {getAllReviewByJobId} from "../../api/PublicService.js";
 import {Button, Empty, List, Rate, Typography} from "antd";
 import dayjs from "dayjs";
 import AnimationWrapper from "../../components/animation/AnimationWrapper.jsx";
@@ -21,7 +21,7 @@ const ReviewList = ({jobId}) => {
             if (isLoadMore) {
                 setReviews((prevState) => [...prevState, ...res.data.content]); // Giữ lại danh sách cũ
             } else {
-                setReviews(res.data.content); // Lấy danh sách mới khi jobId thay đổi
+                setReviews(res.data.content);
             }
 
             setCurrentPage(res.data.currentPage);
@@ -50,33 +50,41 @@ const ReviewList = ({jobId}) => {
 
 
     return (
-        <div style={{width:"100%"}}>
+        <div style={{width: "100%"}}>
+            <h1 style={{marginBottom: "20px"}}>Reviews</h1>
             <List
+                style={{ maxHeight: "800px", overflowY: "auto" }}
                 itemLayout="vertical"
                 dataSource={reviews}
-                renderItem={(item,index) => (
+                renderItem={(item, index) => (
                     <AnimationWrapper index={index} animationType={"fadeInLeft"}>
-                    <List.Item
-                        style={{ minHeight: 100, maxWidth:"100%",padding: "16px" }}>
+                        <List.Item
+                            style={{
+                                minHeight: 100,
+                                maxWidth: "100%",
+                                borderBottom: "1px solid #e8e8e8",
+                                padding: "16px 0",
+                            }}>
                             <List.Item.Meta
                                 avatar={
-                                    <div style={{textAlign:"center"}}>
-                                        <h1 style={{fontWeight:"500"}}>{item.rating}.0</h1>
-                                        <Rate  disabled value={item.rating}   style={{ color: "#555", fontSize: 10}}  />
+                                    <div style={{textAlign: "center"}}>
+                                        <h1 style={{fontSize:24, fontWeight: "500"}}>{item.rating}.0</h1>
+                                        <Rate disabled value={item.rating} style={{color: "#555", fontSize: 10}}/>
                                     </div>
 
-                            }
-                                title={<h3 style={{ fontWeight: 500,fontSize:"18px" }}>Phỏng vấn ngày {dayjs(item.interviewDate).format("DD/MM/YYYY")}</h3>}
+                                }
+                                title={<h3 style={{fontWeight: 500, fontSize: "18px"}}>Phỏng vấn
+                                    ngày {dayjs(item.interviewDate).format("DD/MM/YYYY")}</h3>}
                                 description={
-                                        <p style={{fontSize: 13, color: "#444"}}>
-                                            {item.email} - {dayjs(item.updatedAt).format("[Ngày] D [tháng] M [năm] YYYY")}
-                                        </p>
+                                    <p style={{fontSize: 14, color: "#555"}}>
+                                        {item.email} - {dayjs(item.updatedAt).format("[Ngày] D [tháng] M [năm] YYYY")}
+                                    </p>
                                 }
                             />
-                        <Text style={{fontSize: 16, color: "#444"}}>{item.comment}</Text>
+                            <Text style={{fontSize: 16, color: "black"}}>{item.comment}</Text>
 
 
-                    </List.Item>
+                        </List.Item>
                     </AnimationWrapper>
                 )}
             />
@@ -97,7 +105,6 @@ const ReviewList = ({jobId}) => {
                     </div>
                 )}
             </div>
-
 
 
         </div>

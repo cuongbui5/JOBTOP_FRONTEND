@@ -1,37 +1,46 @@
 
 import { Modal, Form, Input, Rate, Button } from "antd";
 import useApiRequest from "../../hooks/UseHandleApi.js";
-import {getReviewBySlotId, saveReview, updateReview} from "../../api/ReviewService.js";
+import {getReviewByScheduleId, saveReview, updateReview} from "../../api/ReviewService.js";
 import {useEffect, useState} from "react";
+import CustomInputArea from "../../components/web/CustomInputArea.jsx";
 
 // eslint-disable-next-line react/prop-types
-const InterviewRatingModal = ({ visible, onClose,slot }) => {
+const RatingModal = ({ visible, onClose,application }) => {
     const [form] = Form.useForm();
     const {handleRequest}=useApiRequest();
     const [reviewId,setReviewId]=useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
+    console.log(application);
 
     useEffect(() => {
-        if(slot?.id){
-            handleRequest(()=>getReviewBySlotId(slot.id),(res)=>{
-                if (res?.data) {
+        const fetchReviewBySchedule=async ()=>{
+            await handleRequest(()=>getReviewByScheduleId(application?.interviewSchedule?.id),(res)=>{
+                console.log(res)
+                if(res.data!=null){
                     setReviewId(res.data.id)
-                    form.setFieldsValue(res.data); // Điền dữ liệu vào form
-                    setIsUpdating(true); // Đánh dấu là update
-                } else {
-                    form.resetFields(); // Xóa form nếu không có dữ liệu
-                    setIsUpdating(false);
+                    form.setFieldsValue(res.data);
+                    setIsUpdating(true);
                 }
+
+
             })
+
         }
-    }, [slot]);
+        if(visible){
+            fetchReviewBySchedule();
+        }
+
+
+    }, [visible]);
 
     const handleOk = async () => {
         const values = await form.validateFields();
         if(!isUpdating){
+            console.log(application);
+            values.interviewScheduleId=application?.interviewSchedule?.id;
+            values.jobId=application?.jobId;
 
-            values.slotId=slot?.id;
-            values.jobId=slot?.jobId;
             if (Object.values(values).some(value => value === null || value === undefined)) {
                 return;
             }
@@ -50,34 +59,24 @@ const InterviewRatingModal = ({ visible, onClose,slot }) => {
 
     return (
         <Modal
-            title={isUpdating ? "Cập nhật đánh giá" : "Thêm đánh giá"}
+            title={isUpdating ? "Cập nhật đánh giá" : "Đánh giá phỏng vấn"}
             open={visible}
             onCancel={onClose}
-            footer={null}
+            onOk={handleOk}
+
         >
             <Form form={form} layout="vertical">
                 <Form.Item
                     name="rating"
-                    label="Chất lượng phỏng vấn của chúng tôi thế nào?"
+                    label={<span style={{ fontSize: "small" }}>Chất lượng phỏng vấn của chúng tôi thế nào?</span>}
                     rules={[{ required: true, message: "Please provide a rating!" }]}
                 >
                     <Rate />
                 </Form.Item>
-                <Form.Item
-                    name="comment"
-                    label="Có gì không hài lòng, vui lòng để lại lời nhắn"
-                    rules={[{ required: true, message: "Please leave a comment!" }]}
-                >
-                    <Input.TextArea rows={4} />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" onClick={handleOk}>
-                        {isUpdating ? "Cập nhật" : "Đánh giá"}
-                    </Button>
-                </Form.Item>
+                <CustomInputArea name="comment" label="Đánh giá của bạn" line={6}/>
             </Form>
         </Modal>
     );
 };
 
-export default InterviewRatingModal;
+export default RatingModal;

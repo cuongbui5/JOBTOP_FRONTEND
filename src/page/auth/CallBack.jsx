@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Typography } from "antd";
 import { loginByOauth } from "../../api/AuthService.js";
 import useHandleApi from "../../hooks/UseHandleApi.js";

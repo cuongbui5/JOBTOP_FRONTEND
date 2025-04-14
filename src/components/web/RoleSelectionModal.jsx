@@ -7,6 +7,7 @@ import useApiRequest from "../../hooks/UseHandleApi.js";
 
 const { Title } = Typography;
 
+// eslint-disable-next-line react/prop-types
 const RoleSelectionModal = ({ visible }) => {
     const [roles, setRoles] = useState([]);
     const navigate = useNavigate();

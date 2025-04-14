@@ -57,13 +57,13 @@ const UserProfileViewPage=()=>{
             {profile?.publicProfile ?(
                 <Space direction="vertical">
                     <Text strong>
-                        <PhoneOutlined /> {profile?.phone || "N/A"}
+                        <strong>Số điện thoại:</strong> {profile?.phone || "N/A"}
                     </Text>
                     <Text>
-                        <HomeOutlined /> {profile?.address || "Chưa có địa chỉ"}
+                        <strong>Địa chỉ:</strong> {profile?.address || "Chưa cập nhật"}
                     </Text>
                     <Text>
-                        <BookOutlined /> {profile?.education || "Chưa cập nhật giáo dục"}
+                        <strong>Học vấn:</strong> {profile?.education || "Chưa cập nhật"}
                     </Text>
                     <Text>
                         <strong>Ngày sinh:</strong> {profile?.dateOfBirth ? dayjs(profile.dateOfBirth).format("DD-MM-YYYY") : "Chưa cập nhật"}
@@ -71,12 +71,12 @@ const UserProfileViewPage=()=>{
                     <Text>
                         <strong>Giới tính:</strong> {profile?.gender === "MALE" ? "Nam" : profile?.gender === "FEMALE" ? "Nữ" : "Khác"}
                     </Text>
-                    <Paragraph>
-                        <strong>Mô tả:</strong> {profile?.description || "Chưa có mô tả"}
-                    </Paragraph>
-                    <Paragraph>
-                        <strong>Kỹ năng:</strong> {profile?.skills || "Chưa cập nhật kỹ năng"}
-                    </Paragraph>
+                    <Text>
+                        <strong>Mô tả:</strong> {profile?.description || "Chưa cập nhật"}
+                    </Text>
+                    <Text>
+                        <strong>Kỹ năng:</strong> {profile?.skills || "Chưa cập nhật"}
+                    </Text>
                 </Space>
             ):(
                 <div>

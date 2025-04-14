@@ -1,5 +1,5 @@
 import {Card, Typography, Tag, Divider, Descriptions, Col, Space, Row} from "antd";
-import RecruiterCard from "../recruiter/RecruiterCard.jsx";
+import RecruiterCard from "../company/RecruiterCard.jsx";
 import {DollarOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 

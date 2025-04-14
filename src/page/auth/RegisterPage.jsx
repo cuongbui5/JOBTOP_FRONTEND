@@ -1,5 +1,5 @@
 import {Form, Input, Button, Select, message, Typography, Card} from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import {LockOutlined, MailOutlined, UserOutlined} from "@ant-design/icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getAllRoles, register} from "../../api/AuthService.js";
@@ -12,29 +12,19 @@ const { Option } = Select;
 
 
 const RegisterPage = () => {
-    const [roles,setRoles]=useState([])
+
     const navigate=useNavigate();
     const {handleRequest}=useApiRequest()
 
     const onFinish =async (values) => {
-        const role=roles.filter(r => r.id===values.role)[0];
-        console.log(role)
-
-        await handleRequest(()=>register({...values,role}),(res)=>{
+        await handleRequest(()=>register(values),(res)=>{
             console.log(res)
             message.success(res.message);
             navigate("/login")
         })
     };
 
-    useEffect(() => {
-        const fetchRoles= async ()=>{
-            await handleRequest(()=> getAllRoles(),(res)=>{
-                setRoles(res.data)
-            })
-        }
-        fetchRoles();
-    }, []);
+
 
 
 
@@ -67,6 +57,13 @@ const RegisterPage = () => {
                         rules={[{required: true, message: "Please enter your email!", type: "email"}]}
                     >
                         <Input  style={{ borderRadius: "0px",padding:0 }} prefix={<MailOutlined style={{ color: "#555",background:"#ddd",fontSize:"18px",padding:"10px" }}/>} placeholder="Email" size="large"/>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="fullName"
+                        rules={[{required: true, message: "Please enter your full name!"}]}
+                    >
+                        <Input style={{ borderRadius: "0px",padding:0 }} prefix={<UserOutlined style={{ color: "#555",background:"#ddd",fontSize:"18px",padding:"10px" }}/>} placeholder="Họ và tên" size="large"/>
                     </Form.Item>
 
                     {/* Password Field */}
@@ -103,14 +100,13 @@ const RegisterPage = () => {
                     {/* Role Selection */}
                     <Form.Item name="role" rules={[{required: true, message: "Please select your role!"}]}>
                         <Select style={{borderRadius:0}}  placeholder="Bạn là ..." size="large">
-                            {Array.isArray(roles) &&
-                                roles.map((role) =>
-                                    role.name !== "ADMIN" ? (
-                                        <Option  key={role.id} value={role.id}>
-                                            {role.name === "USER" ? "Ứng cử viên" : "Nhà tuyển dụng"}
-                                        </Option>
-                                    ) : null
-                                )}
+                            <Option  key={"CANDIDATE"} value={"CANDIDATE"}>
+                                Ứng cử viên
+                            </Option>
+                            <Option  key={"EMPLOYER"} value={"EMPLOYER"}>
+                                Nhà tuyển dụng
+                            </Option>
+
                         </Select>
                     </Form.Item>
 

@@ -1,11 +1,11 @@
-import {api, apiPrivate} from "./AxiosApi.js";
+import { apiPrivate} from "./AxiosApi.js";
 
 export const saveReview=(data)=>{
     return apiPrivate.post("/interview-reviews",data);
 }
 
-export const getReviewBySlotId=(id)=>{
-    return apiPrivate.get(`/interview-reviews/interview-slot/${id}`);
+export const getReviewByScheduleId=(id)=>{
+    return apiPrivate.get(`/interview-reviews?scheduleId=${id}`);
 }
 
 

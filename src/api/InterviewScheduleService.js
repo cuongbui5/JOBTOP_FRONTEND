@@ -1,21 +1,18 @@
 import {apiPrivate} from "./AxiosApi.js";
 
-export const getAllInterviewByApplication=(id)=>{
-    return apiPrivate.get(`interview-schedule/application/${id}`);
+export const getAllInterviewByCompany=()=>{
+    return apiPrivate.get("interview-schedules");
 }
 
-export const getAllInterviewByUser=()=>{
-    return apiPrivate.get("interview-schedule");
-}
 
 
 export const createInterViewSchedule=(data)=>{
-    return apiPrivate.post("interview-schedule",data);
+    return apiPrivate.post("interview-schedules",data);
 }
 export const updateSchedule=(id,data)=>{
-    return apiPrivate.put(`interview-schedule/${id}`,data);
+    return apiPrivate.put(`interview-schedules/${id}`,data);
 }
 
 export const getScheduleById=(id)=>{
-    return apiPrivate.get(`interview-schedule/${id}`);
+    return apiPrivate.get(`interview-schedules/${id}`);
 }
