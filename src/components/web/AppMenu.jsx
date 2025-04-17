@@ -8,6 +8,9 @@ import {
 } from "@ant-design/icons";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getStoredUser} from "../../utils/helper.js";
+import NotificationPopover from "./NotificationPopover.jsx";
+import {useMediaQuery} from "react-responsive";
+
 
 
 // eslint-disable-next-line react/prop-types
@@ -15,6 +18,7 @@ const AppMenu=({isInline})=>{
     const navigate = useNavigate();
     const location = useLocation();
     const user=getStoredUser();
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
 
     const handleLogout = () => {
@@ -159,24 +163,34 @@ const AppMenu=({isInline})=>{
         },
         {
             key: "/companies",
-            label: <Link to={"/companies"}>Company</Link>,
+            label: <Link to={"/companies"}>Nhà tuyển dụng</Link>,
         },
         {
             key: "/",
             label: <Link to={"/"}>Công việc</Link>,
-        },
-        user ? {
+        }
+    ];
+
+    if (user) {
+        navItems.push(
+            {
+
+                key: "/notifications",
+                label:isMobile?<Link to={"/notifications"}>Thông báo</Link> : <NotificationPopover/> ,
+            },
+            {
                 key: "user",
-                theme:"dark",
                 label: <p>{user.email}</p>,
                 children: dropdownItems,
-
             }
-            : {
-                key: "3",
-                label: <Link to={"/login"} >Đăng nhập/Đăng ký</Link>,
-            },
-    ];
+        );
+    } else {
+
+        navItems.push({
+            key: "3",
+            label: <Link to={"/login"}>Đăng nhập/Đăng ký</Link>,
+        });
+    }
     return  <Menu mode={isInline?"inline":"horizontal"}
                   theme="dark"
                   selectedKeys={[location.pathname]}

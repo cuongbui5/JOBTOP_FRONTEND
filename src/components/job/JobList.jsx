@@ -23,18 +23,10 @@ const JobList=({jobs})=> {
             }}
             dataSource={jobs}
             renderItem={(job, index) => (
-                <List.Item  style={{
-                    cursor: "pointer",
-                    borderRadius: "12px",
-                    border: selectedJobId === job.id ? "1px solid #333" : "1px solid #ddd",
-                    marginBottom: "8px",
-                    transition: "background-color 0.3s ease", // Hiệu ứng mượt mà
-                }}
-                           onClick={()=>setSelectedJobId(job?.id)}>
+                <List.Item>
                     <AnimationWrapper index={index}>
                         <JobCard job={job}/>
                     </AnimationWrapper>
-
                 </List.Item>
 
 

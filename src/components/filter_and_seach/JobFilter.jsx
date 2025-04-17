@@ -1,141 +1,144 @@
-import {useEffect, useState} from "react";
-import { Button, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { useWebStore } from "../../store/WebStore.jsx";
-import useJobStore from "../../store/JobStore.jsx";
+import { useEffect } from "react"
+import { Button } from "antd"
+import { useWebStore } from "../../store/WebStore.jsx"
+import useJobStore from "../../store/JobStore.jsx"
+import MultiSelectFilter from "./MultiSelectFilter.jsx";
+import SingleSelectFilter from "./SingleSelectFilter.jsx";
+
 
 const salaryOptions = [
-    { key: 'below_10m', label: 'Dưới 10 triệu' },
-    { key: '10m_20m', label: '10 - 20 triệu' },
-    { key: '20m_30m', label: '20 - 30 triệu' },
-    { key: '30m_50m', label: '30 - 50 triệu' },
-    { key: 'above_50m', label: 'Trên 50 triệu' }
-];
+    { key: "below_10m", label: "Dưới 10 triệu" },
+    { key: "10m_20m", label: "10 - 20 triệu" },
+    { key: "20m_30m", label: "20 - 30 triệu" },
+    { key: "30m_50m", label: "30 - 50 triệu" },
+    { key: "above_50m", label: "Trên 50 triệu" },
+]
 
-const filterByDateOptions = [
-    { key: '1', label: '24 giờ trước' },
-    { key: '3', label: '3 ngày trước' },
-    { key: '7', label: '7 ngày trước' },
-    { key: '14', label: '14 ngày trước' },
-];
+
 
 const experienceOptions = [
-    { key: 'NO_REQUIREMENT', label: 'Chưa có kinh nghiệm' },
-    { key: 'LESS_THAN_ONE_YEAR', label: 'Dưới 1 năm' },
-    { key: 'ONE_YEAR', label: '1 năm' },
-    { key: 'TWO_YEARS', label: '2 năm' },
-    { key: 'THREE_YEARS', label: '3 năm'},
-    { key: 'FOUR_YEARS', label: '4 năm' },
-    { key: 'FIVE_YEARS', label: '5 năm' },
-    { key: 'MORE_THAN_FIVE_YEARS', label: 'Trên 5 năm' }
-];
+    { key: "NO_REQUIREMENT", label: "Chưa có kinh nghiệm" },
+    { key: "LESS_THAN_ONE_YEAR", label: "Dưới 1 năm" },
+    { key: "ONE_YEAR", label: "1 năm" },
+    { key: "TWO_YEARS", label: "2 năm" },
+    { key: "THREE_YEARS", label: "3 năm" },
+    { key: "FOUR_YEARS", label: "4 năm" },
+    { key: "FIVE_YEARS", label: "5 năm" },
+    { key: "MORE_THAN_FIVE_YEARS", label: "Trên 5 năm" },
+]
 
 const jobTypeOptions = [
-    { key: 'ALL', label: 'Tất cả' },
-    { key: 'FULL_TIME', label: 'Toàn thời gian' },
-    { key: 'PART_TIME', label: 'Bán thời gian' },
-    { key: 'INTERNSHIP', label: 'Thực tập' },
-    { key: 'OTHER', label: 'Khác' }
-];
+    { key: "ALL", label: "Tất cả" },
+    { key: "FULL_TIME", label: "Toàn thời gian" },
+    { key: "PART_TIME", label: "Bán thời gian" },
+    { key: "INTERNSHIP", label: "Thực tập" },
+    { key: "OTHER", label: "Khác" },
+]
 
 const JobFilter = () => {
-    const {companies } = useWebStore(state => state);
-    const {setFilters,filters,setCurrentPage}=useJobStore(state => state)
+    const { companies, categories } = useWebStore((state) => state)
+    const { setFilters, filters, setCurrentPage } = useJobStore((state) => state)
+
+    // Chuyển đổi dữ liệu companies và categories để phù hợp với MultiSelectFilter
+    const companyOptions =
+        companies?.map((company) => ({
+            key: company.id,
+            label: company.name,
+        })) || []
+
+    const categoryOptions =
+        categories?.map((category) => ({
+            key: category.id,
+            label: category.name,
+        })) || []
 
     useEffect(() => {
         setCurrentPage(1)
-    }, [filters]);
+    }, [filters, setCurrentPage])
 
+    // Hàm xử lý khi áp dụng filter
+    const handleApplyFilter = (selectedValues, type) => {
+        // Nếu chỉ chọn một giá trị, giữ nguyên logic cũ
+        // Nếu chọn nhiều giá trị, lưu dưới dạng mảng
+        const value = selectedValues.length === 1 ? selectedValues[0] : selectedValues.length > 0 ? selectedValues : null
+        setFilters({ [type]: value })
+    }
+    const handleApplySingleFilter = (selectedValue, type) => {
+        setFilters({ [type]: selectedValue })
+    }
 
-    const getLabel = (key, options) => {
-        return options?.find((item) => item.key === key)?.label || null;
-    };
-
-
-
-    const handleMenuClick = (key, type) => {
-        setFilters({  [type]: key });
-    };
+    // Lấy giá trị đã chọn cho mỗi filter
+    const getSelectedValues = (type) => {
+        const value = filters?.[type]
+        if (!value) return []
+        return Array.isArray(value) ? value : [value]
+    }
 
     return (
-        <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-            marginTop: "40px",
-            flexWrap: "wrap",
-        }}>
-            <Dropdown menu={{
-                items: filterByDateOptions,
-                onClick: ({ key }) => handleMenuClick(key, "date_posted")
-            }}>
-                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(filters?.date_posted, filterByDateOptions) || "Ngày đăng"}
-                </Button>
-            </Dropdown>
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+                marginTop: "40px",
+                flexWrap: "wrap",
+            }}
+        >
+            <MultiSelectFilter
+                items={categoryOptions}
+                initialSelectedIds={getSelectedValues("categoryId")}
+                onApply={(selectedIds) => handleApplyFilter(selectedIds, "categoryId")}
+                placeholder="Lĩnh vực"
+                labelKey="label"
+                valueKey="key"
 
-            <Dropdown menu={{
-                items: salaryOptions,
-                onClick: ({ key }) => handleMenuClick(key, "salaryRange")
-            }}>
-                <Button   iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(filters?.salaryRange, salaryOptions) || "Mức lương"}
-                </Button>
-            </Dropdown>
-
-            <Dropdown menu={{
-                items: experienceOptions,
-                onClick: ({ key }) => handleMenuClick(key, "exp")
-            }}>
-                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(filters?.exp, experienceOptions) || "Kinh nghiệm"}
-                </Button>
-            </Dropdown>
-
-            <Dropdown
-                menu={{
-                items: companies?.map(company => ({
-                    key: company?.id,
-                    label: company?.name,
-                })),
-                onClick: ({ key }) => handleMenuClick(key, "companyId")
-            }}>
-                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(
-                        filters?.companyId,
-                        companies?.map((c) => ({ key: c.id+"", label: c.name }))
-                    ) || "Công ty"}
-                </Button>
-            </Dropdown>
-
-            <Dropdown menu={{
-                items: jobTypeOptions,
-                onClick: ({ key }) => handleMenuClick(key, "job_type")
-            }}>
-                <Button iconPosition={"end"} icon={<DownOutlined />} size="large" style={{ background: "#E5E1DE" }}>
-                    {getLabel(filters?.job_type, jobTypeOptions) || "Hình thức làm việc"}
-                </Button>
-            </Dropdown>
+            />
 
 
-            <Button
-                size="large"
-                onClick={() => {
-                    setFilters({
-                        exp: null,
-                        date_posted: null,
-                        salaryRange: null,
-                        job_type: null,
-                        companyId: null,
-                        industryId: null
-                    })
-                }}
-            >
-                Xóa lọc
-            </Button>
+            <SingleSelectFilter
+                items={salaryOptions}
+                initialSelectedId={filters?.salaryRange}
+                onApply={(selectedId) => handleApplySingleFilter(selectedId, "salaryRange")}
+                placeholder="Mức lương"
+                labelKey="label"
+                valueKey="key"
+
+            />
+
+
+            <MultiSelectFilter
+                items={experienceOptions}
+                initialSelectedIds={getSelectedValues("exp")}
+                onApply={(selectedIds) => handleApplyFilter(selectedIds, "exp")}
+                placeholder="Kinh nghiệm"
+                labelKey="label"
+                valueKey="key"
+
+            />
+
+            <MultiSelectFilter
+                items={companyOptions}
+                initialSelectedIds={getSelectedValues("companyId")}
+                onApply={(selectedIds) => handleApplyFilter(selectedIds, "companyId")}
+                placeholder="Công ty"
+                labelKey="label"
+                valueKey="key"
+
+            />
+
+            <MultiSelectFilter
+                items={jobTypeOptions}
+                initialSelectedIds={getSelectedValues("job_type")}
+                onApply={(selectedIds) => handleApplyFilter(selectedIds, "job_type")}
+                placeholder="Hình thức làm việc"
+                labelKey="label"
+                valueKey="key"
+
+            />
+
         </div>
-    );
-};
+    )
+}
 
-export default JobFilter;
+export default JobFilter

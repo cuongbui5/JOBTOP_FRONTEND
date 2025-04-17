@@ -6,6 +6,8 @@ import ReportModal from "../components/job/ReportModal.jsx";
 import useWebSocketStore from "../store/WebSocketStore.js";
 import {getStoredUser} from "../utils/helper.js";
 import {useEffect} from "react";
+import MessageNotification from "../components/web/MessageNotification.jsx";
+import JobSuggestionButton from "../components/web/JobSuggestionButton.jsx";
 
 
 
@@ -32,15 +34,21 @@ const PageLayout=()=> {
 
     return (
         <Layout>
-            <HeaderCustom/>
-            <Content style={{width: "100%", minHeight: "90vh", background: "#fff"}}>
-                <Outlet/>
-            </Content>
-            <CustomFooter/>
-            <div>
-                <ReportModal/>
+            <MessageNotification>
+                <HeaderCustom/>
+                <Content style={{width: "100%", minHeight: "90vh", background: "#fff"}}>
+                    <Outlet/>
+                </Content>
+                <CustomFooter/>
+                <div>
+                    <ReportModal/>
 
-            </div>
+                </div>
+                <JobSuggestionButton/>
+
+            </MessageNotification>
+
+
         </Layout>
 
 

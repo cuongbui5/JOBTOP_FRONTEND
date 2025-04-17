@@ -15,3 +15,7 @@ export const updateResumeById=(id,resume)=>{
 export const deleteResumeById=(id)=>{
     return apiPrivate.delete(`resumes/${id}`);
 }
+
+export const setResumeDefaultForAccount=(id)=>{
+    return apiPrivate.post(`resumes/set-default/${id}`);
+}

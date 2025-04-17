@@ -8,7 +8,7 @@ import {
     getStoredUser,
     removeById
 } from "../../utils/helper.js";
-import JobTable from "../../components/web/JobTablex.jsx";
+import JobTable from "../../components/web/JobTable.jsx";
 
 const CompanyJobPage = () => {
     const [jobs, setJobs] = useState([]);

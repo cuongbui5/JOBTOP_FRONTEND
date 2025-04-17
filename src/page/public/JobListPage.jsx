@@ -3,13 +3,9 @@ import JobFilter from "../../components/filter_and_seach/JobFilter.jsx";
 import SearchBar from "../../components/filter_and_seach/SearchBar.jsx";
 import JobBoard from "../../components/job/JobBoard.jsx";
 import useApiRequest from "../../hooks/UseHandleApi.js";
-import {getAllJobsView, sematicSearch} from "../../api/PublicService.js";
+import {getAllJobsView} from "../../api/PublicService.js";
 import useJobStore from "../../store/JobStore.jsx";
 import ResponsiveContainer from "../../components/web/ResponsiveContainer.jsx";
-import {Button, Input} from "antd";
-import {SearchOutlined} from "@ant-design/icons";
-
-
 
 
 

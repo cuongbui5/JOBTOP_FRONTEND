@@ -5,6 +5,7 @@ import {login} from "../../api/AuthService.js";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import Logo from "../../components/web/Logo.jsx";
 import useWebSocketStore from "../../store/WebSocketStore.js";
+import {saveUser} from "../../utils/helper.js";
 
 
 
@@ -28,7 +29,8 @@ const LoginPage = () => {
              console.log(res)
              localStorage.clear();
              localStorage.setItem("token",res.data.token);
-             localStorage.setItem("user",JSON.stringify(res.data.account));
+             saveUser(res.data.account);
+
 
 
              navigate(res.data.account.role === "ADMIN" ? "/admin/dashboard" : "/");

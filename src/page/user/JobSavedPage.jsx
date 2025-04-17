@@ -60,24 +60,10 @@ const JobSavedPage=()=>{
                     }}
                     dataSource={savedJobs}
                     renderItem={(savedJob,index) => (
-
                         <List.Item>
                             <AnimationWrapper index={index}>
-                                <div
-                                    style={{
-                                        cursor: "pointer",
-                                        borderRadius: "12px",
-                                        border:  "1px solid #ddd",
-                                        marginBottom: "8px",
-                                        transition: "background-color 0.3s ease",
-                                    }}
-                                    onClick={()=>setSelectedJobId(savedJob.jobId)}
-                                    >
-                                    <JobCard savedJob={savedJob} setSavedJobs={setSavedJobs}/>
-                                </div>
+                                <JobCard savedJob={savedJob} setSavedJobs={setSavedJobs}/>
                             </AnimationWrapper>
-
-
                         </List.Item>
                         )}
                     />

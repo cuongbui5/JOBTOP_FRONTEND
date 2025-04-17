@@ -4,6 +4,8 @@ import { create } from 'zustand'
 
 const useMessageStore = create((set,get) => ({
     selectedConversationId:null,
+    newMessage:null,
+    setNewMessage:(message)=>set({newMessage:message}),
     setSelectedConversationId:(id)=>set({selectedConversationId:Number(id)}),
     messages:[],
     setMessages:(messages)=>set({messages}),
@@ -15,6 +17,11 @@ const useMessageStore = create((set,get) => ({
     }),
     conversations:[],
     setConversations:(conversations)=>set({conversations}),
+    addConversation:(conversation)=>{
+        set({
+            conversations:[...get().conversations,conversation]
+        })
+    },
 
     markRead:(id)=>{
         const updatedConversations = get().conversations.map(c => {
@@ -43,6 +50,7 @@ const useMessageStore = create((set,get) => ({
             }
             return c;
         });
+        get().setNewMessage(newMessage)
 
         set({ conversations: updatedConversations });
 

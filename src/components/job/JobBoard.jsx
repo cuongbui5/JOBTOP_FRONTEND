@@ -1,4 +1,4 @@
-import  {useEffect, useState} from "react";
+
 import {Button, Col, Dropdown, Layout, Row, Typography} from "antd";
 import {DownOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
@@ -14,8 +14,8 @@ import useJobStore from "../../store/JobStore.jsx";
 const JobBoard = ({ jobs }) => {
     const {setFilters,filters,totalElements,selectedJobId}=useJobStore(state => state)
     const sortOptions = [
-        { key: "date_desc", label: "Newest" },
-        { key: "date_asc", label: "Oldest" },
+        { key: "date_desc", label: "Mới nhất" },
+        { key: "date_asc", label: "Cũ nhất" },
     ];
 
 
@@ -27,10 +27,10 @@ const JobBoard = ({ jobs }) => {
     }
 
     return (
-        <Layout style={{ minHeight: "120vh", backgroundColor: "white" }}>
+        <div style={{ minHeight: "120vh", backgroundColor: "white" }}>
             <Row gutter={[32,32]}>
 
-                <Col xs={24} sm={24} lg={11} style={{ background: "#fff", padding: "16px", overflowY: "auto" }}>
+                <Col xs={24} sm={24} md={24} lg={10} style={{ background: "#fff", overflowY: "auto" }}>
                     <div>
 
                             <Typography.Text>
@@ -45,7 +45,7 @@ const JobBoard = ({ jobs }) => {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
                             <div>
 
-                                <span>Sort by </span>
+                                <span>Sắp xếp theo </span>
                                 <Dropdown
                                     menu={{
                                         items: sortOptions,
@@ -67,7 +67,7 @@ const JobBoard = ({ jobs }) => {
 
                 {/* 📌 Chi tiết công việc (Ẩn trên mobile, chỉ hiển thị khi có job được chọn) */}
                 {selectedJobId && (
-                    <Col xs={0} sm={0} lg={13} style={{ background: "white" }}>
+                    <Col xs={0} sm={0} md={0} lg={14} style={{ background: "white" }}>
                         <Content
                             style={{
                                 width: "100%",
@@ -86,7 +86,7 @@ const JobBoard = ({ jobs }) => {
                     </Col>
                 )}
             </Row>
-        </Layout>
+        </div>
     );
 };
 

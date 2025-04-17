@@ -3,8 +3,15 @@ import {useEffect, useState} from "react";
 import {ExclamationCircleOutlined, InboxOutlined} from "@ant-design/icons";
 import {uploadFile} from "../../api/UploadFileService.js";
 import useApiRequest from "../../hooks/UseHandleApi.js";
-import {createNewResume, deleteResumeById, getAllResumesByUser, updateResumeById} from "../../api/ResumeService.js";
+import {
+    createNewResume,
+    deleteResumeById,
+    getAllResumesByUser,
+    setResumeDefaultForAccount,
+    updateResumeById
+} from "../../api/ResumeService.js";
 import ResumeCard from "./ResumeCard.jsx";
+import {getStoredUser, saveUser} from "../../utils/helper.js";
 const { confirm } = Modal;
 
 const ResumePage = ()=>{
@@ -17,12 +24,21 @@ const ResumePage = ()=>{
     const [mainResumeId, setMainResumeId] = useState(null);
 
 
-    const handleSetMainResume = (resumeId) => {
-        localStorage.setItem("resumeId", resumeId);
-        setMainResumeId(resumeId);
+
+
+    const handleSetMainResume =async (resumeId) => {
+        await handleRequest(()=>setResumeDefaultForAccount(resumeId),(res)=>{
+            console.log(res);
+            saveUser(res.data);
+            setMainResumeId(res.data.resumeDefault);
+
+        })
+
+
     };
 
     useEffect(() => {
+        setMainResumeId(getStoredUser().resumeDefault);
         const fetchResumes=async ()=>{
             await handleRequest(()=>getAllResumesByUser(),(res)=>{
                 console.log(res)
@@ -105,6 +121,7 @@ const ResumePage = ()=>{
             cancelText: "Hủy",
             onOk: async () => {
                 await handleRequest(() => deleteResumeById(resumeId), (res) => {
+                    console.log(res);
                     setResumes(resumes.filter((r) => r.id !== resumeId));
 
                 },null,true);

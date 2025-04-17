@@ -3,12 +3,12 @@ import {create} from "zustand";
 import SockJS from "sockjs-client/dist/sockjs"
 import Stomp from "stompjs";
 import useMessageStore from "./MessageStore.js";
+import useNotificationStore from "./NotificationStore.js";
 const useWebSocketStore = create((set,get) => ({
     socket: null,
     isConnected: false,
     connect: (userId) => {
         const currentSocket = get().socket;
-
         // Nếu đã kết nối thì bỏ qua
         if (currentSocket && currentSocket.connected) {
             return;
@@ -40,6 +40,18 @@ const useWebSocketStore = create((set,get) => ({
                 console.error("❌ WebSocket error", error);
                 set({ isConnected: false, socket: null });
             });
+
+            stompClient.subscribe(`/user/queue/notifications`, (message) => {
+                const notification = JSON.parse(message.body);
+                const { addNotification } = useNotificationStore.getState();
+                addNotification(notification)
+
+                console.log("🔔 Notification received", notification);
+
+
+
+            });
+
         });
     },
     disconnect: () => {

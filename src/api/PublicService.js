@@ -5,29 +5,39 @@ export const getLocationFilter=()=>{
     return api.get(`public/count-jobs-by-location`);
 }
 
-export const getAllJobsView=(filters = {},currentPage=1,currentSize=page_size_view)=>{
+
+
+export const getAllJobsView = (filters = {}, currentPage = 1, currentSize = page_size_view) => {
     return api.get(`public/getAllJobs`, {
         params: {
             page: currentPage,
             size: currentSize,
-            date_posted: filters.date_posted || undefined,
-            salary_range: filters.salaryRange || undefined,
-            exp: filters.exp || undefined,
-            job_type: filters.job_type || undefined,
-            companyId: filters.companyId || undefined,
-            industryId: filters.industryId || undefined,
+            categoryIds: filters.categoryId || undefined,
+            salaryRange: filters.salaryRange || undefined,
+            exps: filters.exp || undefined,
+            jobTypes: filters.job_type || undefined,
+            companyIds: filters.companyId || undefined,
             keyword: filters.keyword?.trim() || undefined,
-            city: filters.city || undefined,
-            sortBy:filters.sortBy||undefined,
+            cities: filters.city || undefined,
+            sortBy: filters.sortBy || undefined,
         },
         paramsSerializer: (params) => {
             return Object.keys(params)
-                .filter((key) => params[key] !== undefined && params[key] !== null && params[key] !== "")
-                .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                .filter(
+                    (key) => params[key] !== undefined && params[key] !== null && params[key] !== ""
+                )
+                .map((key) => {
+                    const value = params[key];
+                    if (Array.isArray(value)) {
+                        return `${encodeURIComponent(key)}=${value.join(",")}`;
+                    }
+                    return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+                })
                 .join("&");
         },
     });
-}
+};
+
 
 
 export function getRelatedJobs(id,currentPage=1,currentSize=5) {

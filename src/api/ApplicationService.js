@@ -1,7 +1,7 @@
 import {apiPrivate} from "./AxiosApi.js";
 
-export function applyJob(jobId,resumeId) {
-    return apiPrivate.post(`applications/apply`,{jobId,resumeId});
+export function applyJob(jobId) {
+    return apiPrivate.post(`applications/apply-job/${jobId}`);
 }
 
 export function getAppliedJobsByUser(page,size,status) {

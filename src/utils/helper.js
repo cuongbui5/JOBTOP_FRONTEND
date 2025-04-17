@@ -1,7 +1,9 @@
 export const getStoredUser=()=>{
     return JSON.parse(localStorage.getItem("user")) ;
 }
-
+export const saveUser=(acc)=>{
+    localStorage.setItem("user",JSON.stringify(acc));
+}
 export const removeById=(array, idsToRemove)=> {
     const ids = Array.isArray(idsToRemove) ? idsToRemove : [idsToRemove];
     return array.filter(item => !ids.includes(item.id));

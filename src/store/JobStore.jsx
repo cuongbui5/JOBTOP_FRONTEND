@@ -7,7 +7,7 @@ const useJobStore = create((set, get) => ({
         keyword: "",
         city: "",
         exp: null,
-        date_posted: null,
+        categoryId: null,
         salaryRange: null,
         job_type: null,
         companyId: null,

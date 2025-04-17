@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import {sematicSearch} from "../../api/PublicService.js";
-import {List, Typography} from "antd";
-import {motion} from "framer-motion";
+import {List} from "antd";
 import JobCard from "./JobCard.jsx";
 import LoadingWrapper from "../loading/LoadingWrapper.jsx";
+import AnimationWrapper from "../animation/AnimationWrapper.jsx";
 
 // eslint-disable-next-line react/prop-types
 const JobListAI=({query})=>{
@@ -29,10 +29,9 @@ const JobListAI=({query})=>{
 
 
     return (
-
+        <div>
             <LoadingWrapper loadingType={"search_ai"}>
-                {jobs && <h1>Công việc liên quan đến {query}</h1>}
-
+                {jobs.length>0&&<p style={{fontWeight:500}}>Tìm thấy {jobs.length} công việc liên quan đến {query}</p>}
                 <List
                     style={{marginTop: "20px"}}
                     grid={{
@@ -46,27 +45,18 @@ const JobListAI=({query})=>{
                     dataSource={jobs}
                     renderItem={(job, index) => (
                         <List.Item>
-                            <motion.div
-                                initial={{opacity: 0, y: 20}}
-                                animate={{opacity: 1, y: 0}}
-                                exit={{opacity: 0, y: -20}}
-                                transition={{duration: 0.3, delay: index * 0.2}}
-
-                                style={{
-                                    cursor: "pointer",
-                                    borderRadius: "12px",
-                                    border: "1px solid #ddd",
-                                    marginBottom: "8px",
-                                    transition: "background-color 0.3s ease", // Hiệu ứng mượt mà
-                                }}
-                            >
+                            <AnimationWrapper index={index}>
                                 <JobCard job={job}/>
-                            </motion.div>
+                            </AnimationWrapper>
                         </List.Item>
                     )}
                 />
 
             </LoadingWrapper>
+
+        </div>
+
+
 
 
 

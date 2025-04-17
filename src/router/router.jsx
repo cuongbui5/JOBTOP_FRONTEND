@@ -34,6 +34,7 @@ import AccountForm from "../page/user/AccountForm.jsx";
 import SearchAIPage from "../page/public/SearchAIPage.jsx";
 import ConversationPage from "../page/conversation/ConversationPage.jsx";
 import ConversationDetail from "../page/conversation/ConversationDetail.jsx";
+import NotificationPage from "../page/notification/NotificationPage.jsx";
 
 
 
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
             { path: "/company/:id", element: <CompanyPage /> },
             { path: "/companies", element: <CompaniesPage /> },
             { path: "/sematic-search", element: <SearchAIPage /> },
+
             //{ path: "/",index: true, element: <HomePage /> },
             {
                 element: <ProtectedRoute />,
@@ -54,6 +56,7 @@ const router = createBrowserRouter([
                     { path: "profile/user/:id", element: <UserProfileViewPage /> },
                     { path: "/conversations", element: <ConversationPage /> },
                     { path: "/conversation/:id", element: <ConversationDetail /> },
+                    { path: "/notifications", element: <NotificationPage /> },
                 ]
 
 

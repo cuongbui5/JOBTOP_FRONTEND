@@ -4,7 +4,7 @@ import {
     CarryOutOutlined,
     DollarOutlined,
     EnvironmentOutlined,
-    FieldTimeOutlined, FlagOutlined,
+    FieldTimeOutlined, FlagOutlined, HeartOutlined,
     SolutionOutlined,
 } from "@ant-design/icons";
 import {Button, Tag, Typography} from "antd";
@@ -13,13 +13,22 @@ import {useRef} from "react";
 import useModalStateStore from "../../store/ModalStateStore.js";
 import SalaryText from "./SalaryText.jsx";
 import {getExperienceLabel, getJobTypeLabel} from "../../utils/helper.js";
+import {saveFavoriteJob} from "../../api/FavoriteJobService.js";
+import useApiRequest from "../../hooks/UseHandleApi.js";
 const { Title, Text } = Typography;
 
 // eslint-disable-next-line react/prop-types
 const JobDetailScroll=({setDirection,job,view})=> {
+    const {handleRequest}=useApiRequest();
     const scrollContainerRef = useRef(null);
     const {setOpenReport}=useModalStateStore(state => state)
     const lastScrollY = useRef(0);
+
+    const saveJob= async (id)=>{
+        await handleRequest(()=> saveFavoriteJob(id),(res)=>{
+            console.log(res)
+        },null,true)
+    }
 
     const handleScroll = () => {
         const currentScrollY = scrollContainerRef.current.scrollTop;
@@ -86,7 +95,7 @@ const JobDetailScroll=({setDirection,job,view})=> {
                             padding: "4px 8px",
                             display: "inline-flex"
                         }}>
-                            <SalaryText salaryMax={job?.salaryMax} salaryMin={job?.salaryMin}/>
+                            <SalaryText salaryMin={job?.salaryMin} salaryMax={job?.salaryMax} format={"compact"}/>
                         </Tag>
                     </div>
 
@@ -219,22 +228,45 @@ const JobDetailScroll=({setDirection,job,view})=> {
 
             </div>
 
-            {view?null:    <Button
-                icon={<FlagOutlined/>}
-                style={{
-                    backgroundColor: "#F1F1EF",
-                    color: "#262626",
-                    fontWeight: "bold",
-                    border: "none",
-                    height: "50px",
-                    fontSize: "18px",
-                    marginTop: "20px"
+            {view? null:
+                <div style={{display:"flex",gap:20,alignItems:"center"}}>
+                    <Button
+                        icon={<FlagOutlined/>}
+                        style={{
+                            backgroundColor: "#F1F1EF",
+                            color: "#262626",
+                            fontWeight: "bold",
+                            border: "none",
+                            height: "50px",
+                            fontSize: "16px",
+                            marginTop: "20px"
 
-                }}
-                onClick={()=>setOpenReport(true)}
-            >
-                Báo cáo
-            </Button>}
+                        }}
+                        onClick={()=>setOpenReport(true)}
+                    >
+                        Báo cáo
+                    </Button>
+
+                    <Button
+                        icon={<HeartOutlined/>}
+                        style={{
+                            backgroundColor: "#F1F1EF",
+                            color: "#262626",
+                            fontWeight: "bold",
+                            border: "none",
+                            height: "50px",
+                            fontSize: "16px",
+                            marginTop: "20px"
+
+                        }}
+                        onClick={() => saveJob(job?.id)}
+                    >
+                        Thêm vào yêu thích
+
+                    </Button>
+
+                </div>
+             }
 
         </LoadingWrapper>
     </div>

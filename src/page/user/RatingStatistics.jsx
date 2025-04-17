@@ -52,7 +52,11 @@ const RatingStatistics = ({ jobId }) => {
                         strokeColor="rgb(32, 88, 180)"
                         style={{ flex: 1, margin: "0 10px" }}
                     />
-                    <span style={{ fontSize: "14px" }}>{((ratings[rating] / totalReviews) * 100).toFixed(1)}%</span>
+                    <span style={{ fontSize: "14px" }}>
+                        {ratings[rating] && totalReviews
+                            ? `${((ratings[rating] / totalReviews) * 100).toFixed(1)}%`
+                            : "0.0%"}
+                    </span>
                 </div>
             ))}
         </div>
