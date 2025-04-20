@@ -120,6 +120,7 @@ const JobPage=()=>{
                     <Select.Option value="rejected">Bị từ chối</Select.Option>
                 </Select>
                 <Table
+                    bordered
                     scroll={{ x: "max-content" }}
                     onChange={handleTableChange} rowKey="id" columns={columnsResponsive} dataSource={jobs}
                        pagination={pagination}/>

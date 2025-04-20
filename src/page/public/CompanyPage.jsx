@@ -34,8 +34,11 @@ const CompanyPage=()=>{
     return (
        <ResponsiveContainer>
            <Row gutter={[32, 32]}>
+               <Col xs={24} md={24}>
+                   <CompanyCard company={company} />
+               </Col>
 
-               <Col xs={24}  md={24} lg={16}>
+               <Col xs={24} md={24}>
                    <div>
                        <h1 style={{margin:"20px 0"}}>About {company?.name}</h1>
                        {company?.description?.split("\n").map((line) => (
@@ -47,9 +50,7 @@ const CompanyPage=()=>{
                    </div>
 
                </Col>
-               <Col xs={24} md={24} lg={8}>
-                   <CompanyCard company={company} />
-               </Col>
+
 
            </Row>
            <Row gutter={[16, 16]}>

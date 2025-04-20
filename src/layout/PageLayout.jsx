@@ -8,6 +8,8 @@ import {getStoredUser} from "../utils/helper.js";
 import {useEffect} from "react";
 import MessageNotification from "../components/web/MessageNotification.jsx";
 import JobSuggestionButton from "../components/web/JobSuggestionButton.jsx";
+import ChatBotModal from "../components/web/ChatBotModal.jsx";
+import AIEvaluationModal from "../components/web/AIEvaluationModal.jsx";
 
 
 
@@ -40,11 +42,15 @@ const PageLayout=()=> {
                     <Outlet/>
                 </Content>
                 <CustomFooter/>
-                <div>
+                {user&&user.role==="CANDIDATE"&&
+                <>
                     <ReportModal/>
+                    <JobSuggestionButton/>
+                    <ChatBotModal/>
+                    <AIEvaluationModal/>
+                </>
+                }
 
-                </div>
-                <JobSuggestionButton/>
 
             </MessageNotification>
 

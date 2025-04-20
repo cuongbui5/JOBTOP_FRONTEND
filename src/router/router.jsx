@@ -27,14 +27,18 @@ import UserProfileViewPage from "../page/user/UserProfileViewPage.jsx";
 import InterviewSchedulePage from "../page/recruiter/InterviewSchedulePage.jsx";
 import InterviewScheduleForm from "../page/recruiter/InterviewScheduleForm.jsx";
 import ReportPage from "../page/admin/ReportPage.jsx";
-import UserPage from "../page/admin/UserPage.jsx";
-import PackagePage from "../page/admin/PackagePage.jsx";
+import AccountsPage from "../page/admin/AccountsPage.jsx";
+import PlanPage from "../page/admin/PlanPage.jsx";
 import DashboardPage from "../page/admin/DashboardPage.jsx";
 import AccountForm from "../page/user/AccountForm.jsx";
 import SearchAIPage from "../page/public/SearchAIPage.jsx";
 import ConversationPage from "../page/conversation/ConversationPage.jsx";
 import ConversationDetail from "../page/conversation/ConversationDetail.jsx";
 import NotificationPage from "../page/notification/NotificationPage.jsx";
+import PricingPage from "../page/public/PricingPage.jsx";
+import PaymentSuccess from "../page/public/PaymentSuccess.jsx";
+import PaymentFailed from "../page/public/PaymentFailed.jsx";
+import PlanManagementPage from "../page/recruiter/PlanManagementPage.jsx";
 
 
 
@@ -48,6 +52,7 @@ const router = createBrowserRouter([
             { path: "/company/:id", element: <CompanyPage /> },
             { path: "/companies", element: <CompaniesPage /> },
             { path: "/sematic-search", element: <SearchAIPage /> },
+
 
             //{ path: "/",index: true, element: <HomePage /> },
             {
@@ -90,6 +95,10 @@ const router = createBrowserRouter([
                     { path: "/recruiter/interview-schedule/edit/:id", element: <InterviewScheduleForm /> },
                     { path: "job/create", element: <JobForm /> },
                     { path: "job/edit/:id", element: <JobForm /> },
+                    { path: "/pricing", element: <PricingPage /> },
+                    { path: "/payment/success", element: <PaymentSuccess /> },
+                    { path: "/payment/cancel", element: <PaymentFailed /> },
+                    { path: "/recruiter/plans", element: <PlanManagementPage /> },
 
                 ],
             },
@@ -105,8 +114,8 @@ const router = createBrowserRouter([
                 children: [
                     { path: "dashboard", element: <DashboardPage /> },
                     { path: "jobs", element: <JobPage />},
-                    { path: "users", element: <UserPage />},
-                    { path: "packages", element: <PackagePage />},
+                    { path: "users", element: <AccountsPage />},
+                    { path: "packages", element: <PlanPage />},
                     { path: "reports", element: <ReportPage />}
                 ],
             },

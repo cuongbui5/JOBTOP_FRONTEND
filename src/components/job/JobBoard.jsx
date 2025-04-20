@@ -30,11 +30,10 @@ const JobBoard = ({ jobs }) => {
         <div style={{ minHeight: "120vh", backgroundColor: "white" }}>
             <Row gutter={[32,32]}>
 
-                <Col xs={24} sm={24} md={24} lg={10} style={{ background: "#fff", overflowY: "auto" }}>
+                <Col xs={24} sm={24} md={24} lg={10} style={{ background: "#fff" }}>
                     <div>
-
                             <Typography.Text>
-                                <Link style={{ fontWeight: "bold", color: "#0044cc" }} to={"/user-profile"}>
+                                <Link style={{ fontWeight: "bold", color: "#0044cc" }} to={"/resumes"}>
                                     Hãy đăng tải hồ sơ của bạn
                                 </Link> và tìm kiếm công việc tiếp theo trên JobTop!
                             </Typography.Text>
@@ -67,11 +66,10 @@ const JobBoard = ({ jobs }) => {
 
                 {/* 📌 Chi tiết công việc (Ẩn trên mobile, chỉ hiển thị khi có job được chọn) */}
                 {selectedJobId && (
-                    <Col xs={0} sm={0} md={0} lg={14} style={{ background: "white" }}>
+                    <Col xs={0} sm={0} md={0} lg={14} >
                         <Content
                             style={{
                                 width: "100%",
-
                                 paddingBottom: "20px",
                                 border: "1px solid #bfbfbf",
                                 overflow: "hidden",

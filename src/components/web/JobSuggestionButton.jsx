@@ -48,40 +48,45 @@ const JobSuggestionButton = () => {
             </Button>
             <div style={{ width: "100%" }}>
             <Modal
-                title="Danh sách công việc phù hợp"
+                title={<h2>Danh sách công việc phù hợp</h2>}
                 open={open}
                 onCancel={() => setOpen(false)}
                 footer={null}
                 width={"100%"}
-
-
+                style={{
+                    top: 40
+                }}
 
 
             >
-                <LoadingWrapper loadingType={"load-by-cv"}>
-                    {jobs&&
-                        <List
-                            grid={{
-                                gutter: 20,
-                                xs: 1,
-                                sm: 1,
-                                md: 2,
-                                lg: 2,
-                                xl: 3,
-                            }}
-                            style={{marginTop: "20px"}}
-                            dataSource={jobs}
-                            renderItem={(job, index) => (
-                                <List.Item>
-                                    <AnimationWrapper index={index}>
-                                        <JobCard job={job}/>
-                                    </AnimationWrapper>
-                                </List.Item>
-                            )}
-                        />}
+                <div style={{maxHeight:"75vh",overflowY:"scroll"}}>
+                    <LoadingWrapper loadingType={"load-by-cv"}>
+                        {jobs&&
+                            <List
+                                grid={{
+                                    gutter: 20,
+                                    xs: 1,
+                                    sm: 1,
+                                    md: 2,
+                                    lg: 2,
+                                    xl: 3,
+                                }}
+                                style={{marginTop: "20px"}}
+                                dataSource={jobs}
+                                renderItem={(job, index) => (
+                                    <List.Item>
+                                        <AnimationWrapper index={index}>
+                                            <JobCard job={job}/>
+                                        </AnimationWrapper>
+                                    </List.Item>
+                                )}
+                            />}
 
 
-                </LoadingWrapper>
+                    </LoadingWrapper>
+
+                </div>
+
 
             </Modal>
             </div>

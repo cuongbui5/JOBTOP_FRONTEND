@@ -10,7 +10,11 @@
     border-radius:0 !important;
 }
 
+.pricing-btn:hover{
+    color: #fff;
+    background: #000;
 
+}
 
 h1, h2, h3 {
     font-family: 'Montserrat', sans-serif;

@@ -75,8 +75,8 @@ const AppMenu=({isInline})=>{
 
         },
         {
-            key: "/recruiter/billing",
-            label: <Link to="/recruiter/billing">Thanh toán & Gói dịch vụ</Link>,
+            key: "/recruiter/plans",
+            label: <Link to="/recruiter/plans">Thanh toán & Gói dịch vụ</Link>,
             icon: <CreditCardOutlined />,
 
         },
@@ -168,10 +168,19 @@ const AppMenu=({isInline})=>{
         {
             key: "/",
             label: <Link to={"/"}>Công việc</Link>,
-        }
+        },
+
     ];
 
+
+
     if (user) {
+        if(user.role==="EMPLOYER"){
+            navItems.push( {
+                key: "/pricing",
+                label: <Link to={"/pricing"}>Nâng cấp gói</Link>,
+            })
+        }
         navItems.push(
             {
 
@@ -185,7 +194,6 @@ const AppMenu=({isInline})=>{
             }
         );
     } else {
-
         navItems.push({
             key: "3",
             label: <Link to={"/login"}>Đăng nhập/Đăng ký</Link>,

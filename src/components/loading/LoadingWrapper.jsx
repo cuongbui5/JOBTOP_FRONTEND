@@ -7,7 +7,7 @@ const LoadingWrapper = ({ children,loadingType }) => {
 
     if(loading){
         return <Card style={{ width: "100%", margin:"20px 0" }}>
-            <Skeleton/>
+            <Skeleton active/>
         </Card>
     }
     return children;

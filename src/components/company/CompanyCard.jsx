@@ -28,12 +28,12 @@ const CompanyCard = ({ company }) => {
                 height:"75px"
             }} src={company?.logo||"/images/company-logo-default.jpg"}  alt={"logo"}/>
 
-            <h2 style={{marginBottom:"10px"}}>
-                <Link style={{color:"black" }} to={`/company/${company?.id}`}>{company?.name}</Link>
-            </h2>
 
-            <Space direction="vertical" size="small" style={{width: "100%"}}>
-                <p><AppstoreOutlined/> {company?.category?.name}</p>
+            <Link style={{color:"black",fontSize:24 }} to={`/company/${company?.id}`}>{company?.name}</Link>
+
+
+            <Space direction="vertical" size="small" style={{fontSize:16,width: "100%",marginTop:"20px"}}>
+                <p style={{}}><AppstoreOutlined/> {company?.category?.name}</p>
                 <p><GlobalOutlined/> {company?.nation}</p>
                 <p><TeamOutlined/> {company?.size}</p>
 
@@ -42,7 +42,10 @@ const CompanyCard = ({ company }) => {
                     <a style={{color: "black",}} href={company?.website} target="_blank"
                        rel="noopener noreferrer"> {company?.website}</a>
                 </p>
-                <p><EnvironmentOutlined/> {company?.address}</p>
+                <p style={{ maxWidth: '100%',         // Hoặc 1 giá trị cụ thể: '300px'
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis'}}><EnvironmentOutlined/> {company?.address}</p>
             </Space>
         </Card>
     );

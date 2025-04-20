@@ -1,7 +1,7 @@
 import {motion} from "framer-motion";
 import {Link, useNavigate} from "react-router-dom";
-import {ExportOutlined, EyeOutlined, HeartOutlined, MessageOutlined, SaveOutlined} from "@ant-design/icons";
-import {Button, notification, Tag} from "antd";
+import {ExportOutlined,  MessageOutlined} from "@ant-design/icons";
+import {Button, Typography} from "antd";
 import LoadingWrapper from "../loading/LoadingWrapper.jsx";
 import SalaryText from "./SalaryText.jsx";
 import useApiRequest from "../../hooks/UseHandleApi.js";
@@ -10,7 +10,7 @@ import {applyJob} from "../../api/ApplicationService.js";
 import {createConversationByUser} from "../../api/ConversationService.js";
 import useMessageStore from "../../store/MessageStore.js";
 import {useMediaQuery} from "react-responsive";
-// eslint-disable-next-line react/prop-types
+const {Text}=Typography;
 const JobPosting=({job,direction,view})=> {
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const {handleRequest}=useApiRequest();
@@ -36,7 +36,7 @@ const JobPosting=({job,direction,view})=> {
             paddingTop: "20px"
         }}>
 
-            <h1 style={{marginBottom: 8}}>{job?.title} <span style={{fontWeight:400}}>({job?.views}) views</span></h1>
+            <h1>{job?.title}</h1>
 
 
 
@@ -66,17 +66,16 @@ const JobPosting=({job,direction,view})=> {
                         color: "#333"
                     }}
                 >
-                    <p style={{fontWeight: 400, fontSize: "16px"}}>
+                    <p style={{fontWeight: 400, fontSize: "14px"}}>
                         {job?.company?.name} <ExportOutlined/>
                     </p>
                 </Link>
                 {direction === "row"&&!isMobile && <div style={{height: "25px", width: "1px", background: "#bfbfbf"}}></div>}
+                <Text style={{fontSize: 14}}>
+                    {job?.city} • {job?.views} lượt xem
+                </Text>
 
-                <p style={{fontSize: "16px"}}>
-                    {job?.city}
-                </p>
                 {direction === "row"&&!isMobile && <div style={{height: "25px", width: "1px", background: "#bfbfbf"}}></div>}
-
 
                 <SalaryText salaryMin={job?.salaryMin} salaryMax={job?.salaryMax} format={"compact"}/>
 
