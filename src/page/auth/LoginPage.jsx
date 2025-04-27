@@ -4,8 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {login} from "../../api/AuthService.js";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import Logo from "../../components/web/Logo.jsx";
-import useWebSocketStore from "../../store/WebSocketStore.js";
 import {saveUser} from "../../utils/helper.js";
+import {useMediaQuery} from "react-responsive";
 
 
 
@@ -18,6 +18,7 @@ const LoginPage = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const { handleRequest } = useApiRequest();
+    const isMobile=useMediaQuery({maxWidth:"768px"})
 
 
 
@@ -30,10 +31,16 @@ const LoginPage = () => {
              localStorage.clear();
              localStorage.setItem("token",res.data.token);
              saveUser(res.data.account);
+             const role=res.data.account.role;
+             if(role==="ADMIN"){
+                 navigate("/admin/dashboard");
+             }else if(role==="CANDIDATE"){
+                 navigate("/");
+             }else {
+                 navigate("/recruiter/dashboard");
+             }
 
 
-
-             navigate(res.data.account.role === "ADMIN" ? "/admin/dashboard" : "/");
 
 
         })
@@ -60,7 +67,7 @@ const LoginPage = () => {
                 width: "100%",
                 maxWidth:450,
                 borderRadius:0,
-                boxShadow: "1px 1px 10px rgba(0, 0, 0, 0.1)",
+                boxShadow: isMobile?"none":"1px 1px 10px rgba(0, 0, 0, 0.1)",
 
 
             }}

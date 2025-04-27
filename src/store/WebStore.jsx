@@ -10,15 +10,19 @@ export const useWebStore = create(
             categories: null,
             cities:null,
             companies:null,
+            init:false,
 
             getDataWebsite: async () => {
+
                 const [ categoriesRes,locationRes,companiesRes] = await axios.all([ getAllCategories(),getLocationFilter(),getAllCompanies()]);
                 console.log(categoriesRes)
                 set({
                     categories: categoriesRes.data || null,
                     cities:locationRes.data||null,
                     companies:companiesRes.data||null,
+                    init:true
                 });
+
             }
         }),
         {

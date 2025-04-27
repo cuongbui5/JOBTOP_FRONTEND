@@ -35,8 +35,8 @@ export default function SingleSelectFilter({items, initialSelectedId , onApply, 
     }
 
     // Debug để kiểm tra giá trị
-    console.log("tempSelectedId:", tempSelectedId)
-    console.log("items:", items)
+    //console.log("tempSelectedId:", tempSelectedId)
+    //console.log("items:", items)
 
     // Nội dung của popover
     const content = (

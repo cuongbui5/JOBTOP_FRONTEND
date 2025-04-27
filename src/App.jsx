@@ -9,10 +9,14 @@ import {useEffect} from "react";
 
 
 function App() {
-    const {getDataWebsite}=useWebStore(state => state);
+    const {getDataWebsite,init}=useWebStore(state => state);
     useEffect(() => {
-        getDataWebsite()
-    }, [getDataWebsite]);
+        if(!init){
+            console.log(init)
+            getDataWebsite()
+        }
+
+    }, []);
 
 
 

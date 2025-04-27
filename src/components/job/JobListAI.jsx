@@ -31,7 +31,7 @@ const JobListAI=({query})=>{
     return (
         <div>
             <LoadingWrapper loadingType={"search_ai"}>
-                {jobs.length>0&&<p style={{fontWeight:500}}>Tìm thấy {jobs.length} công việc liên quan đến {query}</p>}
+                {jobs.length>0&&<p style={{fontSize:20}}>Tìm thấy {jobs.length} công việc liên quan đến {query}</p>}
                 <List
                     style={{marginTop: "20px"}}
                     grid={{

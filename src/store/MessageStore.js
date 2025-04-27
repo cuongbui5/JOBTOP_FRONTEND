@@ -16,7 +16,7 @@ const useMessageStore = create((set,get) => ({
         messages:[...newMessages,...get().messages]
     }),
     conversations:[],
-    setConversations:(conversations)=>set({conversations}),
+    setConversations:(conversations)=>set({conversations:conversations}),
     addConversation:(conversation)=>{
         set({
             conversations:[...get().conversations,conversation]

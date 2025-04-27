@@ -19,7 +19,6 @@ import JobDetailPage from "../page/public/JobDetailPage.jsx";
 import JobAppliedPage from "../page/user/JobAppliedPage.jsx";
 import JobSavedPage from "../page/user/JobSavedPage.jsx";
 import CompanyPage from "../page/public/CompanyPage.jsx";
-import FollowedCompanyPage from "../page/user/FollowedCompanyPage.jsx";
 import CompaniesPage from "../page/public/CompaniesPage.jsx";
 import ApplicationPage from "../page/recruiter/ApplicationPage.jsx";
 import ResumePage from "../page/user/ResumePage.jsx";
@@ -39,6 +38,7 @@ import PricingPage from "../page/public/PricingPage.jsx";
 import PaymentSuccess from "../page/public/PaymentSuccess.jsx";
 import PaymentFailed from "../page/public/PaymentFailed.jsx";
 import PlanManagementPage from "../page/recruiter/PlanManagementPage.jsx";
+import EmployerDashboard from "../page/recruiter/EmployerDashboard.jsx";
 
 
 
@@ -75,7 +75,6 @@ const router = createBrowserRouter([
                     { path: "update-account", element: <AccountForm /> },
                     { path: "applied-jobs", element: <JobAppliedPage /> },
                     { path: "saved-jobs", element: <JobSavedPage /> },
-                    { path: "followed-companies", element: <FollowedCompanyPage /> },
                     { path: "resumes", element: <ResumePage /> },
 
 
@@ -99,6 +98,7 @@ const router = createBrowserRouter([
                     { path: "/payment/success", element: <PaymentSuccess /> },
                     { path: "/payment/cancel", element: <PaymentFailed /> },
                     { path: "/recruiter/plans", element: <PlanManagementPage /> },
+                    { path: "/recruiter/dashboard", element: <EmployerDashboard /> },
 
                 ],
             },

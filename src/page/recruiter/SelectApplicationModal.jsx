@@ -94,11 +94,13 @@ const SelectApplicationModal = ({ open, onClose,schedule }) => {
         if(activeTab==="1"){
             await handleRequest(()=>addToInterviewSchedule(schedule?.id,{applicationIds:selectedApplicationIds}),(res)=>{
                 console.log(res);
+
             })
         }else {
             if(schedule?.status==="COMPLETED"){
                 await handleRequest(()=>markNoShow({applicationIds:selectedApplicationIds}),(res)=>{
                     console.log(res);
+
                 })
             }else {
                 await handleRequest(()=>removeFromInterviewSchedule({applicationIds:selectedApplicationIds}),(res)=>{
@@ -111,7 +113,7 @@ const SelectApplicationModal = ({ open, onClose,schedule }) => {
 
 
 
-        onClose();
+
     };
 
     useEffect(() => {

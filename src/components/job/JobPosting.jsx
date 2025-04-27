@@ -111,12 +111,8 @@ const JobPosting=({job,direction,view})=> {
                         onClick={async () => {
                             await handleRequest(() => createConversationByUser({companyName: job?.company?.name}), (res) => {
                                 console.log(res)
-                                setSelectedConversationId(res.data.id)
-                                if (conversations) {
-                                    addConversation(res.data)
-                                }
 
-                                navigate("/conversations")
+                                navigate("/conversation/"+res.data.conversationId)
 
                             })
                         }}

@@ -1,6 +1,6 @@
 import { Card, Col, Row, Statistic } from "antd";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { UserOutlined, FileOutlined } from "@ant-design/icons";
+import {  FileOutlined } from "@ant-design/icons";
 
 const fakeData = {
     followers: 1200,
@@ -19,16 +19,8 @@ const fakeData = {
 const CompanyStatistics = () => {
     return (
         <Row gutter={[16, 16]}>
-            <Col xs={24} md={8}>
-                <Card>
-                    <Statistic
-                        title="Followers"
-                        value={fakeData.followers}
-                        prefix={<UserOutlined />}
-                    />
-                </Card>
-            </Col>
-            <Col xs={24} md={8}>
+
+            <Col xs={24} md={12}>
                 <Card>
                     <Statistic
                         title="Total Jobs"
@@ -37,7 +29,7 @@ const CompanyStatistics = () => {
                     />
                 </Card>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
                 <Card>
                     <Statistic
                         title="Total Applicants"

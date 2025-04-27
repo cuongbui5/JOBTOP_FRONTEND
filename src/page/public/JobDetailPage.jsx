@@ -32,9 +32,7 @@ const JobDetailPage=()=>{
             </div>
 
 
-            <div style={{width: "100%", marginTop: 100}}>
-                <ApplicationStatsChart jobId={id}/>
-            </div>
+
 
 
             <div style={{width: "100%", marginTop: 100}}>

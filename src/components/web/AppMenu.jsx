@@ -76,7 +76,7 @@ const AppMenu=({isInline})=>{
         },
         {
             key: "/recruiter/plans",
-            label: <Link to="/recruiter/plans">Thanh toán & Gói dịch vụ</Link>,
+            label: <Link to="/recruiter/plans">Gói dịch vụ</Link>,
             icon: <CreditCardOutlined />,
 
         },
@@ -122,11 +122,6 @@ const AppMenu=({isInline})=>{
             key: "/applied-jobs",
             icon: <SolutionOutlined />,
             label: <Link to="/applied-jobs">Việc làm đã ứng tuyển</Link>,
-        },
-        {
-            key: "/followed-companies",
-            icon: <BankOutlined />,
-            label: <Link to="/followed-companies">Công ty đã theo dõi</Link>,
         },
         {
             key: "update-account",
