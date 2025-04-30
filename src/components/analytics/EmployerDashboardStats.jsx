@@ -41,12 +41,12 @@ const EmployerDashboardStats = () => {
                 </Col>
                 <Col span={6}>
                     <Card style={{ borderRadius: "12px" }}>
-                        <Statistic title="Tổng lượt ứng tuyển" value={data?.totalApplications} />
+                        <Statistic title="Tổng đơn ứng tuyển" value={data?.totalApplications} />
                     </Card>
                 </Col>
                 <Col span={6}>
                     <Card style={{ borderRadius: "12px" }}>
-                        <Statistic title="Ứng tuyển đã duyệt" value={data?.approvedApplications} />
+                        <Statistic title="Đơn ứng tuyển đã duyệt" value={data?.approvedApplications} />
                     </Card>
                 </Col>
             </Row>

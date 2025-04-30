@@ -1,10 +1,11 @@
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import {useEffect, useState} from "react";
-import {getTopJobView} from "../../api/AdminDashboardService.js";
+
 import LoadingWrapper from "../loading/LoadingWrapper.jsx";
 import {List} from "antd";
 import AnimationWrapper from "../animation/AnimationWrapper.jsx";
 import JobCard from "./JobCard.jsx";
+import {getTopJobView} from "../../api/PublicService.js";
 
 // eslint-disable-next-line react/prop-types
 const TopViewJobs=({top})=>{

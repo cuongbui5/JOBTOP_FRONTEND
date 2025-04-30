@@ -59,12 +59,6 @@ const RegisterPage = () => {
                         <Input  style={{ borderRadius: "0px",padding:0 }} prefix={<MailOutlined style={{ color: "#555",background:"#ddd",fontSize:"18px",padding:"10px" }}/>} placeholder="Email" size="large"/>
                     </Form.Item>
 
-                    <Form.Item
-                        name="fullName"
-                        rules={[{required: true, message: "Please enter your full name!"}]}
-                    >
-                        <Input style={{ borderRadius: "0px",padding:0 }} prefix={<UserOutlined style={{ color: "#555",background:"#ddd",fontSize:"18px",padding:"10px" }}/>} placeholder="Họ và tên" size="large"/>
-                    </Form.Item>
 
                     {/* Password Field */}
                     <Form.Item

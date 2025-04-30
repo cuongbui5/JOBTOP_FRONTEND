@@ -49,8 +49,9 @@ const ConversationPage = () => {
                                 cursor: 'pointer'
                             }}
                             onClick={() =>{
+
                                 markRead(item.conversationId)
-                                navigate(`/conversation/${item.conversationId}`)
+                                navigate(`/${user.role==="CANDIDATE"?"candidate":"recruiter"}/conversation/${item.conversationId}`)
 
 
                             } }

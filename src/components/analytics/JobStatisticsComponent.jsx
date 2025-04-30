@@ -6,6 +6,7 @@ import {getAllJobsTitle} from "../../api/JobService.js";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import {getJobStatistics} from "../../api/CompanyDashboardService.js";
 import ApplicationStatsChart from "../application/ApplicationStatsChart.jsx";
+import ReviewList from "../../page/user/ReviewList.jsx";
 
 const { Option } = Select;
 
@@ -59,7 +60,7 @@ const JobStatisticsComponent = () => {
 
 
             {stats && (
-                <div style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: 24 }}>
+                <div style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: 24,marginBottom:"40px" }}>
                     <p style={{ fontSize: 20, marginBottom: 20 }}>Phân tích hiệu quả: <span style={{fontWeight:"500"}}>{stats.title}</span></p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32 }}>
                         <div>
@@ -88,6 +89,8 @@ const JobStatisticsComponent = () => {
                     </div>
                 </div>
             )}
+
+            <ReviewList jobId={selectedJobId} />
         </div>
     );
 };

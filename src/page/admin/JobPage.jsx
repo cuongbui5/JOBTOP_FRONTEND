@@ -115,9 +115,9 @@ const JobPage=()=>{
                     onChange={(value) => setSelectedStatus(value)}
                     allowClear
                 >
-                    <Select.Option value="pending">Chờ duyệt</Select.Option>
-                    <Select.Option value="approved">Đã duyệt</Select.Option>
-                    <Select.Option value="rejected">Bị từ chối</Select.Option>
+                    <Select.Option value="PENDING">Chờ duyệt</Select.Option>
+                    <Select.Option value="APPROVED">Đã duyệt</Select.Option>
+                    <Select.Option value="REJECTED">Bị từ chối</Select.Option>
                 </Select>
                 <Table
                     bordered

@@ -46,49 +46,8 @@ const AppMenu=({isInline})=>{
     const recruiterMenuItem = [
         {
             key: "/recruiter/dashboard",
-            label: <Link to="/recruiter/dashboard"> Dashboard</Link>,
-            icon: <DashboardOutlined />,
-
-        },
-        {
-            key: "/recruiter/jobs",
-            label: <Link to="/recruiter/jobs"> Quản lý tin tuyển dụng</Link>,
-            icon: <FileTextOutlined />,
-
-        },
-        {
-            key: "/recruiter/applications",
-            label: <Link to="/recruiter/applications"> Quản lý đơn ứng tuyển</Link>,
-            icon:<TeamOutlined />,
-
-        },
-        {
-            key: "/recruiter/profile",
-            label: <Link to="/recruiter/profile">Hồ sơ công ty</Link>,
-            icon: <BankOutlined />,
-
-        },
-        {
-            key: "/recruiter/interview-schedule",
-            label: <Link to="/recruiter/interview-schedule">Đặt lịch phỏng vấn</Link>,
-            icon: <ScheduleOutlined />,
-
-        },
-        {
-            key: "/recruiter/plans",
-            label: <Link to="/recruiter/plans">Gói dịch vụ</Link>,
-            icon: <CreditCardOutlined />,
-
-        },
-        {
-            key: "conversations",
-            icon: <MessageOutlined />,
-            label: <Link to="/conversations">Xem tin nhắn</Link>,
-        },
-        {
-            key: "notifications",
-            icon: <BellOutlined />,
-            label: <Link to="/notifications">Thông báo</Link>,
+            label: <Link style={{ color: "#A0A0A0", fontSize: "16px" }} to="/recruiter/dashboard">Dashboard</Link>,
+            icon: <DashboardOutlined style={{ color: "#A0A0A0", fontSize: "16px" }} />,
         },
         {
             key: "logout",
@@ -170,12 +129,6 @@ const AppMenu=({isInline})=>{
 
 
     if (user) {
-        if(user.role==="EMPLOYER"){
-            navItems.push( {
-                key: "/pricing",
-                label: <Link to={"/pricing"}>Nâng cấp gói</Link>,
-            })
-        }
         navItems.push(
             {
 

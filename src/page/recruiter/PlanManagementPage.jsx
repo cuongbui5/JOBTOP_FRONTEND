@@ -2,6 +2,8 @@ import {Button, Space, Table, Tag, Typography} from 'antd';
 import {useEffect, useState} from "react";
 import useHandleApi from "../../hooks/UseHandleApi.js";
 import {activePlan, cancelPlan, getAllAccountPlans} from "../../api/AccountPlanService.js";
+import {Link} from "react-router-dom";
+import {ArrowLeftOutlined, ArrowRightOutlined} from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -129,6 +131,8 @@ const PlanManagementPage = () => {
                 bordered
                 pagination={{ pageSize: 5 }}
             />
+
+            <Link to={"/recruiter/pricing"}>Mua gói dịch vụ mới <ArrowRightOutlined/></Link>
         </div>
     );
 };

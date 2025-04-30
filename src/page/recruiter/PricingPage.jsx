@@ -31,7 +31,7 @@ const PricingPage=()=>{
     }
 
     return (
-        <ResponsiveContainer>
+        <div style={{maxWidth: "100%", height: "100%", margin: "auto", backgroundColor: "#fff", padding: 20}}>
             <h2 style={{textAlign: 'center', marginBottom: 40}}>Dành cho nhà tuyển dụng</h2>
             <Row gutter={[24, 24]} justify="center">
                 {plans.map((plan,index) => (
@@ -108,7 +108,7 @@ const PricingPage=()=>{
                     </Col>
                 ))}
             </Row>
-        </ResponsiveContainer>
+        </div>
     )
 
 }

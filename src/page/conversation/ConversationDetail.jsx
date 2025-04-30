@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import { useParams } from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import { List, Input, Button, Form } from "antd"
 
 import useApiRequest from "../../hooks/UseHandleApi.js"
@@ -8,6 +8,7 @@ import { getStoredUser } from "../../utils/helper.js"
 
 import { getConversationById } from "../../api/ConversationService.js"
 import useMessageStore from "../../store/MessageStore.js";
+import {ArrowLeftOutlined} from "@ant-design/icons";
 
 const ConversationDetail = () => {
     const { id } = useParams()
@@ -129,7 +130,7 @@ const ConversationDetail = () => {
         <div
             style={{
                 maxWidth: 700,
-                margin: "0 auto",
+                margin: "20px auto",
                 padding: "20px",
                 backgroundColor: "#fff",
                 borderRadius: 8,
@@ -141,8 +142,8 @@ const ConversationDetail = () => {
             }}
         >
             <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <div style={{ borderBottom: "1px solid #f0f0f0", paddingBottom: 10, marginBottom: 10 }}>
-                    <h3>{user.role === "CANDIDATE" ? conversation?.companyName : conversation?.email}</h3>
+                <div style={{ borderBottom: "1px solid #f0f0f0", paddingBottom: 10, marginBottom: 10,display:"flex",alignItems:"center",gap:10 }}>
+                    <Link to={`/${user.role==="CANDIDATE"?"candidate":"recruiter"}/conversations`}><ArrowLeftOutlined/> </Link> <h3>{user.role === "CANDIDATE" ? conversation?.companyName : conversation?.email}</h3>
                 </div>
 
                 <div

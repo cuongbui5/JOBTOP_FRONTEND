@@ -6,6 +6,7 @@ import useApiRequest from "../../hooks/UseHandleApi.js";
 import {getAllJobsView} from "../../api/PublicService.js";
 import useJobStore from "../../store/JobStore.jsx";
 import ResponsiveContainer from "../../components/web/ResponsiveContainer.jsx";
+import TopViewJobs from "../../components/job/TopViewJobs.jsx";
 
 
 
@@ -42,7 +43,10 @@ const JobListPage = () => {
             </div>
             <ResponsiveContainer>
                 {jobs&&<JobBoard jobs={jobs}/>}
+                <TopViewJobs top={4}/>
             </ResponsiveContainer>
+
+
 
 
 

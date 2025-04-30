@@ -1,5 +1,4 @@
 import ResponsiveContainer from "../../components/web/ResponsiveContainer.jsx";
-import CompanyStatistics from "../../components/company/CompanyStatistics.jsx";
 import EmployerDashboardStats from "../../components/analytics/EmployerDashboardStats.jsx";
 import JobStatisticsComponent from "../../components/analytics/JobStatisticsComponent.jsx";
 

@@ -89,6 +89,10 @@ const CompanyJobPage = () => {
                 Đăng tin tuyển dụng
             </Button>
 
+            <div>
+                <p>Số lượt đăng miễn phí còn lại: {getStoredUser().freePost}</p>
+            </div>
+
             <JobTable
                 jobs={jobs}
                 pagination={pagination}

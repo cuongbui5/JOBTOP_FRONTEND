@@ -69,7 +69,18 @@ const DashboardPage=()=>{
     }, []);
 
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#845EC2'];
+    const COLORS = [
+        '#0088FE',  // Xanh dương
+        '#00C49F',  // Xanh lá cây
+        '#FFBB28',  // Vàng
+        '#FF8042',  // Cam
+        '#845EC2',  // Tím
+        '#FF6347',  // Đỏ cam (Coral Red)
+        '#FFF44F',  // Vàng chanh (Lemon Yellow)
+        '#003366',  // Xanh lam đậm (Dark Blue)
+        '#50C878',  // Xanh lá cây lục bảo (Emerald Green)
+        '#E6E6FA'   // Tím lavendar (Lavender Purple)
+    ];
     return (
         <div style={{
             padding: '20px',

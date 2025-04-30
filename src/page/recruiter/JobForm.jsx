@@ -9,6 +9,7 @@ import CustomInputItem from "../../components/web/CustomInputItem.jsx";
 import CustomSelectItem from "../../components/web/CustomSelectItem.jsx";
 import CustomInputArea from "../../components/web/CustomInputArea.jsx";
 import CustomInputDate from "../../components/web/CustomInputDate.jsx";
+import {getStoredUser, saveUser} from "../../utils/helper.js";
 
 const jobEx = {
     title: "Software Engineer",
@@ -105,6 +106,11 @@ const JobForm=()=> {
                 console.log(res)
                 if(res.status===200){
                     message.success(res.message)
+                    const user=getStoredUser();
+                    user.freePost=user.freePost-1;
+                    saveUser(user)
+
+
 
                 }
             })

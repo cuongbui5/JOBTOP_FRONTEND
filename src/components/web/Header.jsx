@@ -33,16 +33,15 @@ const MyHeader = () => {
             {!isMobile && <AppMenu />}
 
             {isMobile && (
-                <div
-                    style={{
+
+                    <MenuOutlined
+                        onClick={() => setOpenMenu(true)}
+                        style={{
                         fontSize: "24px",
                         color: "white",
                         cursor: "pointer",
-                    }}
-                    onClick={() => setOpenMenu(true)}
-                >
-                    <MenuOutlined />
-                </div>
+                    }} />
+
             )}
             <Drawer open={openMenu}
                     styles={{

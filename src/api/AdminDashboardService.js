@@ -17,9 +17,6 @@ export const getApplicationsCountByStatus=()=>{
     return apiPrivate.get(`admin/applications`);
 }
 
-export const getTopJobView=(num)=>{
-    return apiPrivate.get(`admin/jobs/top-view?top=${num}`);
-}
 
 export const getTopUsedPlan=()=>{
     return apiPrivate.get(`admin/plans/top-used`);

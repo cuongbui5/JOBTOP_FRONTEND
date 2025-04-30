@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, Menu } from "antd";
+import {Avatar, Layout, Menu} from "antd";
 import {
     DashboardOutlined,
     UserOutlined,
@@ -7,9 +7,11 @@ import {
     SettingOutlined, LogoutOutlined, WarningOutlined,
 } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider.js";
-import {Content, Footer} from "antd/es/layout/layout.js";
+import {Content, Footer, Header} from "antd/es/layout/layout.js";
 
 import { Outlet, useNavigate } from "react-router-dom";
+import Logo from "../components/web/Logo.jsx";
+import {getStoredUser} from "../utils/helper.js";
 
 const AdminLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -67,10 +69,28 @@ const AdminLayout = () => {
                 <Menu theme="dark" mode="inline" items={items} />
             </Sider>
             <Layout>
+                <Header
+                    style={{
+                        background: "#fff",
+                        padding: "0 24px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        boxShadow: "0 2px 8px #f0f1f2",
+                    }}
+                >
+                    <Logo size={"20px"}/>
+                    <div style={{display: "flex", alignItems: "center", cursor: "pointer"}}>
+                        <Avatar icon={<UserOutlined/>} style={{marginRight: 8}}/>
+                        <span>{getStoredUser().email}</span>
+                    </div>
+
+
+                </Header>
                 <Content style={{ margin: "16px", padding: "16px", background: "#fff", borderRadius: "8px" }}>
                     <Outlet />
                 </Content>
-                <Footer style={{ textAlign: "center" }}>Admin Dashboard ©2024 Created by You</Footer>
+                <Footer style={{ textAlign: "center" }}>Admin Dashboard ©2025 JOBTOP</Footer>
             </Layout>
         </Layout>
     );

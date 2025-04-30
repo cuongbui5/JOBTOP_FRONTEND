@@ -1,4 +1,4 @@
-import {Button, Col, Form, Image, Input, Popover, Row, Select, Upload} from "antd";
+import {Button, Col, Form, Image, Popover, Row, Select, Upload} from "antd";
 import {EditOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import {uploadFile} from "../../api/UploadFileService.js";

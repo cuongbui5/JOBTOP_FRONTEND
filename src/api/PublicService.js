@@ -5,6 +5,19 @@ export const getLocationFilter=()=>{
     return api.get(`public/count-jobs-by-location`);
 }
 
+export const getTopJobView=(num)=>{
+    return api.get(`public/jobs/top-view?top=${num}`);
+}
+
+
+
+export const getAllDesiredPositions=()=>{
+    return api.get(`public/desired-positions`);
+}
+
+export const getAllCities=()=>{
+    return api.get(`public/cities`);
+}
 
 
 export const getAllJobsView = (filters = {}, currentPage = 1, currentSize = page_size_view) => {

@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import { getUserProfileByUserId} from "../../api/PublicService.js";
 import {Avatar, Button, Card, Space, Typography} from "antd";
-import {BookOutlined, HomeOutlined, MessageOutlined, PhoneOutlined, UserOutlined} from "@ant-design/icons";
+import { MessageOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 
