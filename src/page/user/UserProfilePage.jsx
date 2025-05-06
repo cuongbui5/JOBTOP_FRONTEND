@@ -20,6 +20,7 @@ import CustomInputArea from "../../components/web/CustomInputArea.jsx";
 import CustomSelectItem from "../../components/web/CustomSelectItem.jsx";
 import {EducationLevel, ExperienceLevel, PositionLevel} from "../../utils/helper.js";
 import {getAllDesiredPositions} from "../../api/PublicService.js";
+import CitySelect from "../../components/web/CitySelect.jsx";
 
 
 
@@ -106,7 +107,7 @@ const UpdateUserProfile = () => {
                         <CustomInputItem name="phone" label="Số điện thoại"/>
                         <CustomInputDate name="dateOfBirth" label="Ngày sinh"/>
                         <CustomInputItem name="address" label="Địa chỉ"/>
-                        <CustomInputItem name="city" label="Thành phố / Tỉnh"/>
+                        <CitySelect/>
                         <CustomInputArea name="description" label="Mô tả bản thân" line={10}/>
                         <CustomInputItem name="workLocation" label="Nơi làm việc"/>
                         <Form.Item name="gender" label="Giới tính">

@@ -1,4 +1,4 @@
-import {Button, Col, Form, Image, notification, Popover, Row, Upload} from "antd";
+import {Button, Col, Form, Image, notification, Popover, Row, Switch, Upload} from "antd";
 import CustomInputItem from "../../components/web/CustomInputItem.jsx";
 import CustomInputPassword from "../../components/web/CustomInputPassword.jsx";
 import {EditOutlined} from "@ant-design/icons";
@@ -49,10 +49,12 @@ const AccountForm=()=>{
             <Form layout="vertical" form={formBasic} onFinish={handleSaveBasic}>
                 <Row gutter={32}>
                     <Col xs={24} sm={24} md={24} lg={16} xl={16}>
-                        <CustomInputItem name="fullName" label="Họ và tên"/>
                         <CustomInputPassword name="currentPassword" label="Mật khẩu hiện tại"/>
                         <CustomInputPassword name="newPassword" label="Mật khẩu mới"/>
                         <CustomInputPassword name="confirmPassword" label="Xác nhận mật khẩu mới"/>
+                        <Form.Item label="Thông báo việc làm phù hợp từ JobTop" name="receiveEmail" valuePropName="checked">
+                            <Switch  />
+                        </Form.Item>
                     </Col>
 
 
@@ -81,6 +83,7 @@ const AccountForm=()=>{
                                 />
                             </Popover>
                         </Form.Item>
+
                     </Col>
                 </Row>
 

@@ -125,7 +125,7 @@ const JobCard = ({job,savedJob,setSavedJobs}) => {
                     </Dropdown>
 
                 </div>
-                <p style={{margin: "0", color: '#555', fontWeight: "400", fontSize: "16px"}}>{job?.companyName}</p>
+                <p style={{margin: "0", color: '#555', fontWeight: "400", fontSize: "16px"}}>{job?.companyName||job?.company?.name}</p>
                 <p style={{margin: "0", color: '#555', fontWeight: "400", fontSize: "14px"}}>{job?.city}</p>
                 <div style={{padding: "5px 0", display: "flex", gap: "5px", flexWrap: "wrap"}}>
                     <Tag style={{

@@ -10,7 +10,7 @@ import {
 } from "../../utils/helper.js";
 import JobTable from "../../components/web/JobTable.jsx";
 
-const CompanyJobPage = () => {
+const JobManagementPage = () => {
     const [jobs, setJobs] = useState([]);
     const [pagination, setPagination] = useState({
         pageSize: 5,
@@ -47,7 +47,7 @@ const CompanyJobPage = () => {
     }, [currentPage]);
 
     const handleEdit = (job) => {
-        navigate(`/job/edit/${job.id}`);
+        navigate(`/recruiter/job/edit/${job.id}`);
     };
 
     const handleDelete = async (job) => {
@@ -84,7 +84,7 @@ const CompanyJobPage = () => {
                 type="primary"
                 size="large"
                 style={{ marginBottom: 16, borderRadius: 0 }}
-                onClick={() => navigate("/job/create")}
+                onClick={() => navigate("/recruiter/job/create")}
             >
                 Đăng tin tuyển dụng
             </Button>
@@ -105,4 +105,4 @@ const CompanyJobPage = () => {
     );
 };
 
-export default CompanyJobPage;
+export default JobManagementPage;

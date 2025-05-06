@@ -93,7 +93,8 @@ const SelectApplicationModal = ({ open, onClose,schedule }) => {
             .filter(app => selectedRowKeys.includes(app.id)).map(app => app.id);
         if(activeTab==="1"){
             await handleRequest(()=>addToInterviewSchedule(schedule?.id,{applicationIds:selectedApplicationIds}),(res)=>{
-                console.log(res);
+                fetchApplications(1, pagination.pageSize,viewStatus,jobIdSelected);
+
 
             })
         }else {

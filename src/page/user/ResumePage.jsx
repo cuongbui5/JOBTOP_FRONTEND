@@ -22,6 +22,7 @@ const ResumePage = ()=>{
     const {handleRequest}=useApiRequest();
     const [editingResume, setEditingResume] = useState(null);
     const [mainResumeId, setMainResumeId] = useState(null);
+    const [fileList,setFileList]=useState([])
 
 
 
@@ -82,10 +83,13 @@ const ResumePage = ()=>{
             });
         }
 
+        setFileList([])
+
         setIsModalOpen(false);
     };
 
     const handleCancel = () => {
+        setFileList([])
         setIsModalOpen(false);
     };
     const handlerCvBeforeUpload=async (file)=> {
@@ -101,6 +105,8 @@ const ResumePage = ()=>{
         await handleRequest(()=>uploadFile(file),(res)=>{
             setLink(res.data)
         },null,true)
+
+        setFileList((pre)=>[...pre,file])
 
 
 
@@ -181,12 +187,14 @@ const ResumePage = ()=>{
                 <Upload.Dragger
                     name="file"
                     multiple={false}
+                    showUploadList={true}
+                    fileList={fileList}
                     beforeUpload={handlerCvBeforeUpload} // Chặn upload tự động
                 >
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined />
                     </p>
-                    <p className="ant-upload-text">Kéo thả hoặc bấm để tải lên</p>
+                    <p>Kéo thả hoặc bấm để tải lên</p>
                 </Upload.Dragger>
             </Modal>
         </div>

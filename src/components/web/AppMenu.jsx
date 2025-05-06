@@ -121,7 +121,7 @@ const AppMenu=({isInline})=>{
         },
         {
             key: "/",
-            label: <Link to={"/"}>Công việc</Link>,
+            label: <Link to={"/"}>Tin tuyển dụng</Link>,
         },
 
     ];

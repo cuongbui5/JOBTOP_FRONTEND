@@ -25,8 +25,9 @@ const CallBack = () => {
             await handleRequest(
                 () => loginByOauth(code),
                 (res) => {
+                    console.log(res)
                     localStorage.setItem("token", res.data.token);
-                    localStorage.setItem("user", JSON.stringify(res.data.user));
+                    localStorage.setItem("user", JSON.stringify(res.data.account));
                     navigate("/")
                 }
             );

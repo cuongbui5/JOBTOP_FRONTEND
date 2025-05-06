@@ -1,8 +1,6 @@
-import {Button, DatePicker, Form, Input, Select, TimePicker, Table, Checkbox, Col, Row} from "antd";
+import { Form, Select} from "antd";
 import {useEffect, useState} from "react";
 import useApiRequest from "../../hooks/UseHandleApi.js";
-
-import {getApplicationsByFilter} from "../../api/ApplicationService.js";
 import dayjs from "dayjs";
 import {createInterViewSchedule, getScheduleById, updateSchedule} from "../../api/InterviewScheduleService.js";
 import CustomInputItem from "../../components/web/CustomInputItem.jsx";

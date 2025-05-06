@@ -10,6 +10,7 @@ import CustomSelectItem from "../../components/web/CustomSelectItem.jsx";
 import CustomInputArea from "../../components/web/CustomInputArea.jsx";
 import CustomInputDate from "../../components/web/CustomInputDate.jsx";
 import {getStoredUser, saveUser} from "../../utils/helper.js";
+import CitySelect from "../../components/web/CitySelect.jsx";
 
 const jobEx = {
     title: "Software Engineer",
@@ -107,8 +108,11 @@ const JobForm=()=> {
                 if(res.status===200){
                     message.success(res.message)
                     const user=getStoredUser();
-                    user.freePost=user.freePost-1;
-                    saveUser(user)
+                    if(user.freePost>0){
+                        user.freePost=user.freePost-1;
+                        saveUser(user)
+                    }
+
 
 
 
@@ -136,9 +140,8 @@ const JobForm=()=> {
                     <Col xs={24} md={12}>
                         <CustomInputItem name="title" label="Tiêu đề công việc"/>
                         <CustomInputItem name="location" label="Địa điểm"/>
-                        <CustomInputItem name="city" label="Thành phố"/>
+                        <CitySelect/>
                         <CustomInputItem label="Lịch làm việc" name="workSchedule"/>
-                        <CustomInputItem name="city" label="Thành phố"/>
                         <CustomInputDate name="applicationDeadline" label="Hạn nộp hồ sơ"/>
 
                         <Form.Item
@@ -204,13 +207,10 @@ const JobForm=()=> {
                         </CustomSelectItem>
 
 
-
-
-
                     </Col>
                     <Col xs={24} md={12}>
-                        <CustomInputArea  name="description" label="Mô tả công việc" line={11}/>
-                        <CustomInputArea  name="benefits" label="Quyền lợi" line={12}/>
+                        <CustomInputArea  name="description" label="Mô tả công việc" line={12}/>
+                        <CustomInputArea  name="benefits" label="Quyền lợi" line={8}/>
                         <CustomInputArea  name="requirements" label="Yêu cầu công việc" line={12}/>
 
                     </Col>

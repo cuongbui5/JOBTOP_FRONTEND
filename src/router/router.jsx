@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute.jsx";
 import UserProfilePage from "../page/user/UserProfilePage.jsx";
 import UpdateCompanyPage from "../page/recruiter/UpdateCompanyPage.jsx";
-import CompanyJobPage from "../page/recruiter/CompanyJobPage.jsx";
+import JobManagementPage from "../page/recruiter/JobManagementPage.jsx";
 import JobForm from "../page/recruiter/JobForm.jsx";
 import AdminLayout from "../layout/AdminLayout.jsx";
 import LoginPage from "../page/auth/LoginPage.jsx";
@@ -78,9 +78,9 @@ const router = createBrowserRouter([
                     { path: "applied-jobs", element: <JobAppliedPage /> },
                     { path: "saved-jobs", element: <JobSavedPage /> },
                     { path: "resumes", element: <ResumePage /> },
-                    { path: "/conversations", element: <ConversationPage /> },
-                    { path: "/candidate/conversation/:id", element: <ConversationDetail /> },
-                    { path: "/notifications", element: <NotificationPage /> },
+                    { path: "conversations", element: <ConversationPage /> },
+                    { path: "candidate/conversation/:id", element: <ConversationDetail /> },
+                    { path: "notifications", element: <NotificationPage /> },
 
 
 
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
                 element: <ProtectedRoute requiredRole="EMPLOYER" />,
                 children: [
                     { path: "profile", element: <UpdateCompanyPage /> },
-                    { path: "jobs", element: <CompanyJobPage /> },
+                    { path: "jobs", element: <JobManagementPage /> },
                     { path: "applications", element: <ApplicationPage /> },
                     { path: "interview-schedule", element: <InterviewSchedulePage /> },
                     { path: "interview-schedule/create", element: <InterviewScheduleForm /> },
