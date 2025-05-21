@@ -36,6 +36,7 @@ const JobDetailPage=()=>{
 
 
             <div style={{width: "100%", marginTop: 100}}>
+                <h1>Việc làm tương tự</h1>
                 <JobListAI query={jobTitle}/>
 
             </div>

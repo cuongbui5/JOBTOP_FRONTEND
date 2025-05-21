@@ -74,12 +74,17 @@ const SearchAIPage = () => {
                     Tìm việc
                 </Button>
             </div>
+            <div style={{marginTop:40}}>
+                <h2>{query!==""?"Kết quả tìm kiếm: "+query:"Tất cả công việc"}</h2>
+                <JobListAI query={query}/>
+
+            </div>
 
 
 
 
 
-            <JobListAI query={query}/>
+
 
 
 
