@@ -56,6 +56,8 @@ const router = createBrowserRouter([
             { path: "/companies", element: <CompaniesPage /> },
             { path: "/sematic-search", element: <SearchAIPage /> },
             { path: "/test", element: <TestRateLimit /> },
+            { path: "/payment/success", element: <PaymentSuccess /> },
+            { path: "/payment/cancel", element: <PaymentFailed /> },
 
 
             //{ path: "/",index: true, element: <HomePage /> },
@@ -113,8 +115,7 @@ const router = createBrowserRouter([
                     { path: "job/create", element: <JobForm /> },
                     { path: "job/edit/:id", element: <JobForm /> },
                     { path: "pricing", element: <PricingPage /> },
-                    { path: "payment/success", element: <PaymentSuccess /> },
-                    { path: "payment/cancel", element: <PaymentFailed /> },
+
                     { path: "plans", element: <PlanManagementPage /> },
                     { path: "dashboard", element: <EmployerDashboard /> },
                     { path: "conversations", element: <ConversationPage /> },

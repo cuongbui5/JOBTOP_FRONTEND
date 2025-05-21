@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const getStoredUser=()=>{
     return JSON.parse(localStorage.getItem("user")) ;
 }
@@ -8,6 +10,10 @@ export const removeById=(array, idsToRemove)=> {
     const ids = Array.isArray(idsToRemove) ? idsToRemove : [idsToRemove];
     return array.filter(item => !ids.includes(item.id));
 }
+export const getDay=(day)=>{
+    return  dayjs(day).utcOffset(0, true).toISOString();
+}
+
 export const JobStatus = {
     PENDING: { text: "Chờ duyệt", color: "orange" },
     APPROVED: { text: "Đã duyệt", color: "green" },

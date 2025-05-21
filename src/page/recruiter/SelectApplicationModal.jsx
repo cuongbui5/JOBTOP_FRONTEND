@@ -101,11 +101,12 @@ const SelectApplicationModal = ({ open, onClose,schedule }) => {
             if(schedule?.status==="COMPLETED"){
                 await handleRequest(()=>markNoShow({applicationIds:selectedApplicationIds}),(res)=>{
                     console.log(res);
+                    fetchApplications(1, pagination.pageSize,null,null,schedule?.id)
 
                 })
             }else {
                 await handleRequest(()=>removeFromInterviewSchedule({applicationIds:selectedApplicationIds}),(res)=>{
-                    console.log(res);
+                    fetchApplications(1, pagination.pageSize,null,null,schedule?.id)
                 })
             }
 

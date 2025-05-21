@@ -163,7 +163,7 @@ const ApplicationUserCard=({application,openRating,setApplicationSelected})=>{
                             <div style={{marginTop: 16}}>
                                 <Button
                                     icon={<StarOutlined/>}
-                                    disabled={application.status !== "COMPLETED"}
+                                    disabled={application?.interviewSchedule?.status !== "COMPLETED"}
                                     onClick={() => {
                                         openRating();
                                         setApplicationSelected(application);

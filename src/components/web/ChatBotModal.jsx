@@ -76,7 +76,7 @@ const ChatBotModal = () => {
                 open={open}
                 onCancel={() => setOpen(false)}
                 footer={null}
-                width={1000}
+                width={600}
                 styles={{ padding: '16px'  }}
             >
                 <div style={{

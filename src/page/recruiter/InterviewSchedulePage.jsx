@@ -48,7 +48,7 @@ const InterviewSchedulePage = () => {
                         setSelectedSchedule(record);
                         setIsModalOpen(true);
                     }}
-                    >Thêm ứng viên</Button>
+                    >Quản lý đơn ứng tuyển</Button>
 
                 </Space>
 

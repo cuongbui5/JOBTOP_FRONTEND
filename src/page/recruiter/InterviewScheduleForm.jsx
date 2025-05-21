@@ -11,6 +11,7 @@ import CustomButton from "../../components/web/CustomButton.jsx";
 import ResponsiveContainer from "../../components/web/ResponsiveContainer.jsx";
 import {useParams} from "react-router-dom";
 import CustomSelectItem from "../../components/web/CustomSelectItem.jsx";
+import {getDay} from "../../utils/helper.js";
 const { Option } = Select;
 const InterviewScheduleForm = () => {
     const [form] = Form.useForm();
@@ -48,6 +49,7 @@ const InterviewScheduleForm = () => {
     const handleSubmit = async (values) => {
         values.startTime=dayjs(values.startTime).format("HH:mm")
         values.endTime=dayjs(values.endTime).format("HH:mm")
+        values.interviewDate=getDay(values.interviewDate);
         if(id){
             await handleRequest(() => updateSchedule(id, values), (res) => {
                 console.log(res);

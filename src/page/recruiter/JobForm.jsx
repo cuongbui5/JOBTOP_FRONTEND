@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {getJob, createJob,updateJob} from "../../api/JobService.js";
 import dayjs from "dayjs";
-import {Button, Col, DatePicker, Form, Input, message, Row, Select} from "antd";
+import {Button, Col, Form, Input, message, Row, Select} from "antd";
 import useApiRequest from "../../hooks/UseHandleApi.js";
 import ResponsiveContainer from "../../components/web/ResponsiveContainer.jsx";
 import CustomInputItem from "../../components/web/CustomInputItem.jsx";
 import CustomSelectItem from "../../components/web/CustomSelectItem.jsx";
 import CustomInputArea from "../../components/web/CustomInputArea.jsx";
 import CustomInputDate from "../../components/web/CustomInputDate.jsx";
-import {getStoredUser, saveUser} from "../../utils/helper.js";
+import {getDay, getStoredUser, saveUser} from "../../utils/helper.js";
 import CitySelect from "../../components/web/CitySelect.jsx";
 
 const jobEx = {
@@ -83,7 +83,7 @@ const JobForm=()=> {
 
 
         if(values.applicationDeadline){
-            values.applicationDeadline= dayjs(values.applicationDeadline).utcOffset(0, true).toISOString();
+            values.applicationDeadline= getDay(values.applicationDeadline);
 
         }
 

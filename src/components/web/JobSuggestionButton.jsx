@@ -48,7 +48,7 @@ const JobSuggestionButton = () => {
             </Button>
             <div style={{ width: "100%" }}>
             <Modal
-                title={<h2>Danh sách công việc phù hợp</h2>}
+                title={<h2>Gợi ý công việc theo CV (Tìm thấy {jobs?.length} công việc)</h2>}
                 open={open}
                 onCancel={() => setOpen(false)}
                 footer={null}
