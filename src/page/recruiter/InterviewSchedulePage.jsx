@@ -25,14 +25,30 @@ const InterviewSchedulePage = () => {
         { title: "Ngày phỏng vấn", dataIndex: "interviewDate", key: "interviewDate" },
         { title: "Thời gian bắt đầu", dataIndex: "startTime", key: "startTime" },
         { title: "Thời gian kết thúc", dataIndex: "endTime", key: "endTime" },
-        { title: "Địa điểm", dataIndex: "officeAddress", key: "officeAddress" },
-        { title: "Ghi chú", dataIndex: "interviewNote", key: "interviewNote" },
+        {
+            title: "Địa điểm",
+            dataIndex: "officeAddress",
+            key: "officeAddress",
+            render: (text) => (
+                <span title={text}>
+            {text.length > 30 ? `${text.slice(0, 30)}...` : text}
+        </span>
+            ),
+        },
         {
             title: "Trạng thái",
             dataIndex: "status",
             key: "status",
+            filters: [
+                { text: "Đã hoàn thành", value: "COMPLETED" },
+                { text: "Đã lên lịch", value: "SCHEDULED" },
+                { text: "Nhà tuyển dụng đã hủy", value: "CANCELLED_BY_RECRUITER" },
+
+                // thêm các trạng thái khác nếu có
+            ],
+            onFilter: (value, record) => record.status === value,
             render: (status) => {
-                const {text,color}=getInterviewStatusLabel(status)
+                const { text, color } = getInterviewStatusLabel(status);
                 return <Tag color={color}>{text}</Tag>;
             },
         },

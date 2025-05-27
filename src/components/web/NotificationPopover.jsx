@@ -1,6 +1,6 @@
 // NotificationPopover.jsx
 import {BellOutlined, CloseOutlined} from '@ant-design/icons';
-import {Badge, Popover, List, Typography, Pagination, Spin, Avatar, Button, Popconfirm} from 'antd';
+import {Badge, Popover, List, Typography, Pagination, Avatar, Button} from 'antd';
 import { useState } from 'react';
 import useHandleApi from "../../hooks/UseHandleApi.js";
 import {deleteNotification, getAllNotifications} from "../../api/NotificationService.js";
