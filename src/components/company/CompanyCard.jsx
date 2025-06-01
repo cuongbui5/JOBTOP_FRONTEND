@@ -8,7 +8,7 @@ const CompanyCard = ({ company }) => {
 
     return (
         <Card
-            style={{position:"relative", width: "100%", borderRadius: 10, boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+            style={{position:"relative", width: "100%", minHeight:550,borderRadius: 10, boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
 
             cover={
                 <div style={{height: 240, background: "#f5f5f5"}}>
@@ -20,12 +20,15 @@ const CompanyCard = ({ company }) => {
             }
         >
             <img style={{
+                padding:"5px",
                 position:"absolute",
                 top:200,
                 right:30,
                 borderRadius:"8px",
-                width:"75px",
-                height:"75px"
+                background:"white",
+                border:"3px solid #999",
+                width:"65px",
+                height:"60px"
             }} src={company?.logo||"/images/company-logo-default.jpg"}  alt={"logo"}/>
 
 
@@ -33,7 +36,7 @@ const CompanyCard = ({ company }) => {
 
 
             <Space direction="vertical" size="small" style={{fontSize:16,width: "100%",marginTop:"20px"}}>
-                <p style={{}}><AppstoreOutlined/> {company?.category?.name}</p>
+                <p><AppstoreOutlined/> {company?.category?.name}</p>
                 <p><GlobalOutlined/> {company?.nation}</p>
                 <p><TeamOutlined/> {company?.size}</p>
 

@@ -89,7 +89,7 @@ const UpdateCompanyPage=()=>{
         if(logo){
             values.logo=logo;
         }
-        if(company){
+        if(company.id!=null){
             console.log("updated")
             await handleRequest(()=>updateCompany(company.id,values),(res)=>{
                console.log(res)
@@ -101,6 +101,7 @@ const UpdateCompanyPage=()=>{
             console.log("crete")
             await handleRequest(()=>createCompany(values),(res)=>{
                 console.log(res)
+                setCompany(res.data)
             },null,true)
 
         }
@@ -164,6 +165,7 @@ const UpdateCompanyPage=()=>{
 
                             >
                                 <Image
+                                    width={300}
                                     preview={false}
                                     style={{
                                         background: "#555",

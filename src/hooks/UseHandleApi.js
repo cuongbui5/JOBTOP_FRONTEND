@@ -61,7 +61,7 @@ const useApiRequest = () => {
 
 const showNotification = (errorMessage) => {
     return new Promise((resolve) => {
-        notification.error({
+        notification.warning({
             message: "Lỗi",
             description: errorMessage || "Có lỗi xảy ra!",
             duration: 3, // Thời gian hiển thị (giây)

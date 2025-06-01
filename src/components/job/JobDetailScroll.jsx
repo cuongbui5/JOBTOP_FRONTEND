@@ -45,7 +45,7 @@ const JobDetailScroll=({setDirection,job,view})=> {
 
     };
 
-    return <div ref={scrollContainerRef} onScroll={handleScroll} style={{overflowY: "auto", maxHeight: 600, paddingLeft: "20px"}}>
+    return <div ref={scrollContainerRef} onScroll={handleScroll} style={{overflowY: "auto", maxHeight: 700, paddingLeft: "20px"}}>
         <LoadingWrapper loadingType={"GET_JOB_DETAIL"}>
             <div style={{
                 maxWidth: "100%",

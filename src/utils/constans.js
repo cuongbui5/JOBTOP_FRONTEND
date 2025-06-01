@@ -5,4 +5,4 @@ export const LOADING_TYPES = {
     DASHBOARD_STATS: "loadingDashboardStats"
 };
 
-export const page_size_view=3;
+export const page_size_view=10;

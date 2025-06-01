@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const BASE_URL = "http://127.0.0.1:7000/";
-const MAX_RETRY=3;
+const MAX_RETRY=5;
 const api = axios.create({
     baseURL: BASE_URL,
     withCredentials:true,

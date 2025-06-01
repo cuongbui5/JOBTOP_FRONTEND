@@ -13,6 +13,8 @@ const CompaniesPage = () => {
 
 
 
+
+
     const filteredCompanies = selectedCategory
         ? companies.filter(company => company.category.id === selectedCategory)
         : companies;

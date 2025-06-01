@@ -17,7 +17,7 @@ const JobList=({jobs})=> {
             style={{
                 marginTop: "10px",
                 width: "100%",
-                maxHeight: "680px", // Giới hạn chiều cao
+                maxHeight: "800px", // Giới hạn chiều cao
                 overflowY: "auto",  // Tạo thanh cuộn dọc riêng
 
             }}
@@ -34,7 +34,7 @@ const JobList=({jobs})=> {
             )}
         />
 
-        <div style={{width: "100%", display: "flex", justifyContent: "center", padding: "10px"}}>
+        <div style={{width: "100%",display: "flex", justifyContent: "center", padding: "10px"}}>
             <Pagination simple defaultCurrent={currentPage} total={totalElements} current={currentPage}
                         pageSize={page_size_view}
                         onChange={(page)=>{ setCurrentPage(page)}}/>

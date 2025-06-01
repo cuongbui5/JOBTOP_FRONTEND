@@ -40,7 +40,7 @@ const CompanyPage=()=>{
 
                <Col xs={24} md={24}>
                    <div>
-                       <h1 style={{margin:"20px 0"}}>About {company?.name}</h1>
+                       <h1 style={{margin:"20px 0"}}>Giới thiệu về {company?.name}</h1>
                        {company?.description?.split("\n").map((line,index) => (
                            <Text key={index} style={{ display: "block", marginBottom: "4px" }}>
                                {line}

@@ -1,7 +1,7 @@
 import {apiPrivate} from "./AxiosApi.js";
 
 export function updateCompany(id,data) {
-    return apiPrivate.put(`companies/update/${id}`, data);
+    return apiPrivate.patch(`companies/update/${id}`, data);
 }
 
 export function createCompany(data) {

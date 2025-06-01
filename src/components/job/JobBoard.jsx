@@ -27,7 +27,7 @@ const JobBoard = ({ jobs }) => {
     }
 
     return (
-        <div style={{ minHeight: "120vh", backgroundColor: "white" }}>
+        <div style={{ minHeight: "140vh", backgroundColor: "white" }}>
             <Row gutter={[32,32]}>
 
                 <Col xs={24} sm={24} md={24} lg={10} style={{ background: "#fff" }}>
