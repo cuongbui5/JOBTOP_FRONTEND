@@ -22,6 +22,11 @@ import {
 } from "recharts";
 import LoadingWrapper from "../../components/loading/LoadingWrapper.jsx";
 import TopViewJobs from "../../components/job/TopViewJobs.jsx";
+import TotalRevenue from "../../components/transaction/TotalRevenue.jsx";
+import RevenueByDate from "../../components/transaction/RevenueByDate.jsx";
+import RevenueByMonth from "../../components/transaction/RevenueByMonth.jsx";
+import RevenueByYear from "../../components/transaction/RevenueByYear.jsx";
+import RevenueReportDownloader from "../../components/transaction/RevenueReportDownloader.jsx";
 
 const DashboardPage=()=>{
     const [accountData,setAccountData]=useState(null);
@@ -92,6 +97,20 @@ const DashboardPage=()=>{
             <Button type={"link"} icon={<RightOutlined/>} iconPosition={"end"}>
                 <a href="https://dashboard.stripe.com/test/dashboard" target="_blank">Xem doanh thu </a>
             </Button>
+            <div>
+                <div style={{display: "flex", gap: 20, flexWrap: "wrap", marginBottom: "30px"}}>
+                    <TotalRevenue/>
+                    <RevenueByDate/>
+                    <RevenueByMonth/>
+                    <RevenueByYear/>
+                    <RevenueReportDownloader/>
+                </div>
+
+
+
+
+            </div>
+
 
             <div style={{display: "flex", gap: 20, flexWrap: "wrap", marginBottom: "100px"}}>
 
