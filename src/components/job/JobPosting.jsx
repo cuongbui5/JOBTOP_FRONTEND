@@ -112,7 +112,7 @@ const JobPosting=({job,direction,view})=> {
                             await handleRequest(() => createConversationByUser({companyName: job?.company?.name}), (res) => {
                                 console.log(res)
 
-                                navigate("candidate/conversation/"+res.data.conversationId)
+                                navigate("/candidate/conversation/"+res.data.conversationId)
 
                             })
                         }}
